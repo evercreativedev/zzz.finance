@@ -1,0 +1,64 @@
+.Toastify {
+  a {
+    text-decoration: none !important;
+  }
+}
+
+.apptoast-container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin: 4px 0px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.Toastify__toast {
+  border-radius: 10px !important;
+  border: 2px solid #b8b8b8;
+  background-color: rgb(245, 245, 245) !important;
+  box-shadow: 14px 17px 28px -12px rgba(255, 255, 255, 0.35);
+}
+
+.Toastify__toast-body {
+  padding-top: 0px;
+}
+
+.Toastify__close-button > svg {
+  fill: #fff !important;
+}
+
+.apptoast-container-col {
+  flex-direction: column;
+  display: flex;
+}
+
+.gap {
+  display: flex;
+  flex: 1;
+}
+
+.spinner {
+  margin-right: 3px;
+}
+
+.apptoast-message {
+  font-size: 0.8;
+  font-weight: bold;
+  color: rgb(34, 34, 34);
+}
+
+.apptoast-link {
+  margin-top: 10px;
+  font-size: 0.75em;
+  font-weight: bold;
+  color: rgb(73, 73, 73);
+  margin-top: 4px;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 200px;
+  a {
+    color: lightskyblue;
+  }
+}

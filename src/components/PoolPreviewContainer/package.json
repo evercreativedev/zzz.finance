@@ -1,0 +1,6 @@
+{
+  "name": "PoolPreviewContainer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PoolPreviewContainer.tsx"
+}

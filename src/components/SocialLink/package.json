@@ -1,0 +1,7 @@
+{
+    "name": "SocialLink",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./SocialLink.tsx"
+  }
+  

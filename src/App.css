@@ -1,0 +1,28 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input {
+  outline: none;
+}
+
+input::placeholder {
+  font-size: 11px;
+  color: rgb(9, 51, 12);
+  opacity: 0.3;
+  font-weight: normal;
+  font-family: "Ubuntu";
+  font-weight: bold;
+}
+
+.button {
+  outline: none;
+  max-height: 50px;
+}

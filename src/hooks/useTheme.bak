@@ -1,0 +1,57 @@
+// import { createMuiTheme, Theme } from "@material-ui/core";
+// import {
+//   deepOrange,
+//   deepPurple,
+//   lightBlue,
+//   orange,
+// } from "@material-ui/core/colors";
+// import { useEffect, useState } from "react";
+
+// const lightTheme: Theme = createMuiTheme({
+//   palette: {
+//     type: "light",
+//     primary: {
+//       main: lightBlue[500],
+//     },
+//     secondary: {
+//       main: deepPurple[500],
+//     },
+//   },
+// });
+// const darkTheme: Theme = createMuiTheme({
+//   palette: {
+//     type: "dark",
+//     primary: {
+//       main: orange[500],
+//     },
+//     secondary: {
+//       main: deepOrange[500],
+//     },
+//   },
+// });
+
+// export default function useTheme() {
+//   const [isDarkTheme, setIsDarkTheme] = useState(false);
+//   const [themePalette, setThemePalette] = useState(lightTheme);
+
+//   useEffect(() => {
+//     const localStorageTheme = window.localStorage.getItem("isDarkTheme");
+//     if (localStorageTheme) {
+//       setIsDarkTheme(JSON.parse(localStorageTheme));
+//     }
+//   }, []);
+
+//   const toggleTheme = () => {
+//     if (isDarkTheme) {
+//       setIsDarkTheme(false);
+//       window.localStorage.setItem("isDarkTheme", "false");
+//       setThemePalette(lightTheme);
+//     } else {
+//       setIsDarkTheme(true);
+//       window.localStorage.setItem("isDarkTheme", "true");
+//       setThemePalette(darkTheme);
+//     }
+//   };
+
+//   return [isDarkTheme, themePalette, toggleTheme];
+// }

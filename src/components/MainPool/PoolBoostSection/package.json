@@ -1,0 +1,7 @@
+{
+    "name": "PoolBoostSection",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./PoolBoostSection.tsx"
+  }
+  

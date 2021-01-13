@@ -1,0 +1,7 @@
+{
+    "name": "MainPools",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./MainPools.tsx"
+  }
+  

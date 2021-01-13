@@ -1,0 +1,28 @@
+.pool-info {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  a {
+    display: block;
+    color: rgb(255, 0, 234);
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    text-decoration: none;
+  }
+
+  a:hover {
+    opacity: 0.6;
+  }
+  .image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .token-info-buttons {
+    display: flex;
+    flex-flow: row wrap;
+  }
+}

@@ -1,0 +1,57 @@
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+
+const defaultPalette = {
+  palette: {
+    common: {
+      black: "#212121",
+      white: "#ECECEC",
+    },
+    primary: {
+      light: "#0984E3",
+      main: "#ECECEC",
+      dark: "#17202A",
+    },
+    secondary: {
+      light: "#AFA6F2",
+      dark: "#6C5CE7",
+      main: "#C8C8D6",
+    },
+    error: {
+      dark: "#f35858",
+      main: "#ff9494",
+      light: "#fecdcd",
+    },
+    info: {
+      dark: "#E7368C",
+      main: "#E84393",
+      light: "#F292C0",
+    },
+    warning: {
+      dark: "#e9db1c",
+      main: "#f5ea47",
+      light: "#f7f1a1",
+    },
+    success: {
+      dark: "#26BA66",
+      main: "#60E097",
+      light: "#88E7B1",
+      contrastText: "rgba(0,0,0,0.8)",
+    },
+    exotic: {
+      amethyst: "#A865DB",
+    },
+  },
+  typography: {
+    fontFamily: [
+      "Ubuntu",
+      "Roboto",
+      "Verdana",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+  },
+};
+
+export const defaultTheme = responsiveFontSizes(createMuiTheme(defaultPalette));
