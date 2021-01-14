@@ -173,7 +173,7 @@ class VaultStore {
 
   withdraw = async (amount: string, vaultId: number) => {
     const parsedAmount = parseEther(amount);
-    await handleTransaction(async () => await this.vault.withdraw(vaultId, parsedAmount), `deposit of ${amount}`, amount);
+    await handleTransaction(async () => await this.vault.withdraw(vaultId, parsedAmount), `withdraw of ${amount}`, amount);
     await this.fetchVaultData(vaultId);
     return true;
   };
