@@ -52,7 +52,7 @@ class VaultStore {
     } else {
       totalStaked = formatResult(await stakingToken.balanceOf(this.vault.address), 18);
     }
-    const rewardsPerBlock = await this.vault.averageFeesPerBlockSinceStart();
+    const rewardsPerBlock = await this.vault.averageFeesPerBlockEpoch();
 
     const ZZZShare = Number(vaultInfo.allocPointZZZ) / 300;
     const NAPShare = Number(vaultInfo.allocPointNAP) / 300;
