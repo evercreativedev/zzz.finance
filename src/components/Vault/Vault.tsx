@@ -139,16 +139,11 @@ function Vault({ vaultId }: Props) {
                 Get
               </a>
               {!boostTokenAllowances[i] && (
-                <div
-                  className={`vault-button ${currentBoost === i && "selected"}`}
-                  onClick={() => setCurrentBoost(i)}
-                  key={`button-${token.name}-${vaultId}`}
-                >
+                <div className={`vault-button ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
                   Peek
                 </div>
               )}
               <div
-                key={`button-${token.name}-${vaultId}`}
                 className={`vault-button boost-button ${currentBoost === i && "selected"}`}
                 onClick={() => VaultStore.boostApprove(i, vaultId)}
               >
