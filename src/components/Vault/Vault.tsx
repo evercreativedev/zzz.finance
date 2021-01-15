@@ -76,10 +76,10 @@ function Vault({ vaultId }: Props) {
       </div>
       <div className="sub-header">
         <div className="zzz-rewards">
-          ZZZ rewards: <b>{zzzRewards} ZZZ</b>
+          ZZZ rewards: <b>{amount > 0 ? zzzRewards : 0} ZZZ</b>
         </div>
         <div className="nap-rewards">
-          NAP rewards: <b>{napRewards} NAP</b>
+          NAP rewards: <b>{amount > 0 ? napRewards : 0} NAP</b>
         </div>
         <div className="apy">
           APY: <b>{!isNaN(APY) ? APY : 0}%</b>

@@ -190,7 +190,7 @@ class VaultStore {
   };
 
   claim = async (vaultId: number) => {
-    await handleTransaction(async () => await this.vault.claim(vaultId), `timelock`);
+    await handleTransaction(async () => await this.vault.claim(vaultId), `claim`);
     await this.fetchVaultData(vaultId);
     return true;
   };
@@ -202,7 +202,10 @@ class VaultStore {
   };
 
   boostApprove = async (id: number, vaultId: number) => {
-    await handleTransaction(async () => await this.boostTokens[id].approve(this.vault.address, parseEther("100000000000")), `approval`);
+    await handleTransaction(
+      async () => await this.boostTokens[id].approve(this.vault.address, parseEther("100000000000")),
+      `boost approval`
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
