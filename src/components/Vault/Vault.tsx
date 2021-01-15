@@ -129,11 +129,7 @@ function Vault({ vaultId }: Props) {
               <a href={token.purchaseFrom} target="blank" rel="noopener noreferrer" className="vault-button get-token">
                 Get
               </a>
-              <div
-                className={`vault-button ${currentBoost === i && "selected"}`}
-                onClick={() => setCurrentBoost(i)}
-                key={`button-${token.name}-${vaultId}`}
-              >
+              <div className={`vault-button ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
                 Boost with {token.name}
               </div>
             </div>
