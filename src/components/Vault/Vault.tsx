@@ -186,8 +186,8 @@ const InteractionButtons = ({ inputValue, vaultId, hasTimelock }: { inputValue: 
     >
       Withdraw
     </div>
-    <div className="vault-button" onClick={() => VaultStore.claim(vaultId)}>
-      Claim
+    <div className="vault-button disabled">
+      Claim (<span role="img" aria-label="under construction"></span>🔧)
     </div>
   </>
 );
