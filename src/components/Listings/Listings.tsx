@@ -8,8 +8,7 @@ import uniswap from "assets/whitebite.webp";
 import coingecko from "assets/coingecko.webp";
 import { ListingsContainer } from "./Listings.styles";
 
-type Props = {};
-function Listings({}: Props) {
+function Listings() {
   return (
     <ListingsContainer>
       <h1 style={{ gridColumn: "1/3", justifySelf: "center" }}>Uniswap</h1>
