@@ -13,7 +13,6 @@ const defaultNetwork = "homestead";
 // API key for that service will be used.
 const provider = ethers.getDefaultProvider(defaultNetwork, {
   etherscan: process.env.REACT_APP_ETHERSCAN_API_KEY,
-  alchemy: process.env.REACT_APP_ALCHEMY_API_KEY,
 });
 
 class Eth {
