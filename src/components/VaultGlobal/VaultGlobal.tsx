@@ -28,7 +28,7 @@ function VaultGlobal() {
   const { currentBlock } = EthStore;
   const { epoch, epochStartBlock } = VaultStore;
 
-  const canStartNewEpoch = epochStartBlock + 50000 - currentBlock <= 0;
+  const canStartNewEpoch = epochStartBlock + 200000 - currentBlock <= 0;
   return (
     <div className="vault-global">
       <h1>
@@ -43,7 +43,7 @@ function VaultGlobal() {
         </span>
       </div>
       <div className="epoch">
-        CURRENT EPOCH: {epoch} - next in {epochStartBlock + 50000 - currentBlock} blocks
+        CURRENT EPOCH: {epoch} - next in {epochStartBlock + 200000 - currentBlock} blocks
       </div>
       <div className={`vault-button ${!canStartNewEpoch && "disabled"}`} onClick={() => canStartNewEpoch && VaultStore.newEpoch()}>
         Start a new epoch
