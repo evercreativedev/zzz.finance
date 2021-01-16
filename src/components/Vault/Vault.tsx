@@ -177,9 +177,7 @@ function Vault({ vaultId }: Props) {
 
 const InteractionButtons = ({ inputValue, vaultId, hasTimelock }: { inputValue: string; vaultId: number; hasTimelock: boolean }) => (
   <>
-    <div className="vault-button" onClick={() => parseFloat(inputValue) > 0 && VaultStore.deposit(inputValue, vaultId)}>
-      Deposit
-    </div>
+    <div className="vault-button disabled">Deposit</div>
     <div
       className={`vault-button ${hasTimelock && "disabled"}`}
       onClick={() => !hasTimelock && parseFloat(inputValue) > 0 && VaultStore.withdraw(inputValue, vaultId)}
