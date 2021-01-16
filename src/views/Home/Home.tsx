@@ -55,8 +55,7 @@ const infoBoxes = [
   },
 ];
 
-type Props = {};
-function Home({}: Props) {
+function Home() {
   const [typed, setTyped] = useState(false);
   useEffect(() => {
     typeWriter(setTyped);
@@ -85,46 +84,45 @@ function Home({}: Props) {
                 <img src={zzzlogo} alt="zzz" className="zzz-logo" />
                 <h2>What is ZZZ?</h2>
                 <p>
-                  ZZZ is a community-centered DeFi project by the people, for the people. The decisions and actions of ZZZ are
-                  made by its members and community to assure equity and fairness for all.
+                  ZZZ is a community-centered DeFi project by the people, for the people. The decisions and actions of ZZZ are made by its
+                  members and community to assure equity and fairness for all.
                 </p>
                 <p>It all started by a single developer and as of now the project is handed to the community to grow forwards.</p>
                 <p>
-                  It is a new form of governance system. A think-tank. A place where innovation, entrepreneurship, and
-                  technological advancements are the priority, creating a much needed utility focus to the blockchain space. The
-                  value of ZZZ is determined by the contribution and innovation of the community as a whole.
+                  It is a new form of governance system. A think-tank. A place where innovation, entrepreneurship, and technological
+                  advancements are the priority, creating a much needed utility focus to the blockchain space. The value of ZZZ is
+                  determined by the contribution and innovation of the community as a whole.
                 </p>
                 <h2>Why ZZZ?</h2>
                 <p>
-                  Owning <b>$ZZZ</b> enables your voice to be heard regarding the future of the project by enabling you to vote on
-                  and initiate proposals for the protocol.
+                  Owning <b>$ZZZ</b> enables your voice to be heard regarding the future of the project by enabling you to vote on and
+                  initiate proposals for the protocol.
                 </p>
                 <p>
-                  Proposal initiation and voting will be avalaible in the near future using a snapshotting system. A gas-relayer
-                  system where users pay no fees is coming later.
+                  Proposal initiation and voting will be avalaible in the near future using a snapshotting system. A gas-relayer system
+                  where users pay no fees is coming later.
                 </p>
                 <p>
-                  Owning ZZZ provides you with unique bonuses on our DeFi-platform by giving your deposited assets a yield bonus
-                  according to the amount of ZZZ you are holding. So you are gaining the upper hand.
+                  Owning ZZZ provides you with unique bonuses on our DeFi-platform by giving your deposited assets a yield bonus according
+                  to the amount of ZZZ you are holding. So you are gaining the upper hand.
                 </p>
                 <h2>Okay, anything more?</h2>
                 <p>
-                  Mandatory part of the ZZZ ecosystem is its <b>collaborations</b> with other projects in the space to expand the
-                  reach of the ecosystem.
+                  Mandatory part of the ZZZ ecosystem is its <b>collaborations</b> with other projects in the space to expand the reach of
+                  the ecosystem.
                 </p>
                 <p>
-                  The community knows that ZZZ keeps on introducing new interesting projects and that we require the projects to
-                  meet a certain standard.
+                  The community knows that ZZZ keeps on introducing new interesting projects and that we require the projects to meet a
+                  certain standard.
                 </p>
                 <p>
-                  ZZZ is able to provide a platform for the already established or for the upcoming projects who need the initial
-                  push. Combined with our expertise and the community, there is no doubt that greater results will be achieved by
-                  collaborating rather than competing.
+                  ZZZ is able to provide a platform for the already established or for the upcoming projects who need the initial push.
+                  Combined with our expertise and the community, there is no doubt that greater results will be achieved by collaborating
+                  rather than competing.
                 </p>
                 <h2>Tokenomics</h2>
                 <p>
-                  A capped supply of <b>20,000 $ZZZ</b> has been distributed to the community. There was no presale, dev or VC
-                  wallets.
+                  A capped supply of <b>20,000 $ZZZ</b> has been distributed to the community. There was no presale, dev or VC wallets.
                 </p>
                 <p>
                   A capped supply of <b>20,000,000 $NAP</b> has been created to fuel the ecosystem and its development.
@@ -153,20 +151,20 @@ function Home({}: Props) {
             <div className="certik-text">
               <h2>What?</h2>
               <p>
-                We have just completed an audit process with CertiK for our yield farming contracts. After a few revisions all
-                major and critical issues found by CertiK were alleviated and the finalized report has been received and our pools
-                have been implemented with this standard for quite some time.
+                We have just completed an audit process with CertiK for our yield farming contracts. After a few revisions all major and
+                critical issues found by CertiK were alleviated and the finalized report has been received and our pools have been
+                implemented with this standard for quite some time.
               </p>
               <h2>Why?</h2>
               <p>
-                We found it necessary to provide a proof of authenticity for our partners and investors and we are determined to
-                maintain the standards for all upcoming projects.
+                We found it necessary to provide a proof of authenticity for our partners and investors and we are determined to maintain
+                the standards for all upcoming projects.
               </p>
               <h2>CertiK?</h2>
               <p>
-                We have chosen CertiK as they are a trusted and reputable brand with unrivalled expertise in the quality of
-                conducting extensive and efficient code auditing. Our community deserves nothing but the best, and quality
-                polished code is paramount to that.
+                We have chosen CertiK as they are a trusted and reputable brand with unrivalled expertise in the quality of conducting
+                extensive and efficient code auditing. Our community deserves nothing but the best, and quality polished code is paramount
+                to that.
               </p>
             </div>
             <a

@@ -16,9 +16,7 @@ import { CompensationContainer, CompensationTitle } from "views/Compensation/Com
 
 const title = "Snoozer compensations";
 
-type Props = {};
-
-function Governance({}: Props) {
+function Governance() {
   const { library, account } = useWeb3React();
   const [claimLimit, setClaimLimit] = useState(0);
   const [tokensClaimed, setTokensClaimed] = useState(0);

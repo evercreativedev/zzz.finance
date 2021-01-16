@@ -6,9 +6,7 @@ import { GovernanceTitle, GovernanceIframe } from "views/Governance/Governance.s
 
 const title = "Vote on the future of ZZZ";
 
-type Props = {};
-
-function Governance({}: Props) {
+function Governance() {
   return (
     <Layout view="Governance" type="vertical">
       <Layout.ExtraGovernanceContent>
@@ -17,12 +15,7 @@ function Governance({}: Props) {
           <img className="title-image" src={img_governance} id="subtitle" alt="governance" />
           <div className="discuss-container">
             <img className="convo-image" src={img_join_convo} id="subtitle" alt="governance" />
-            <a
-              href="https://forums.zzz.finance"
-              target="blank"
-              rel="noopener noreferrer"
-              style={{ pointerEvents: "none", opacity: "0.4" }}
-            >
+            <a href="https://forums.zzz.finance" target="blank" rel="noopener noreferrer" style={{ pointerEvents: "none", opacity: "0.4" }}>
               <button className="join-button">
                 <s>Discuss</s> (offline)
               </button>
