@@ -20,6 +20,10 @@ class VaultStore {
   @observable epochStartBlock = 0;
   @observable NAPb = 0;
   @observable ZZZb = 0;
+  @observable ZZZlastEpoch = 0;
+  @observable NAPlastEpoch = 0;
+  @observable NAPcurrentEpoch = 0;
+  @observable ZZZcurrentEpoch = 0;
   contracts = vaultContracts.homestead;
   vault: any;
   multiplier: any;
@@ -57,7 +61,7 @@ class VaultStore {
     const rewardsPerBlock = await this.vault.averageFeesPerBlockEpoch();
 
     const ZZZShare = Number(vaultInfo.allocPointZZZ) / 300;
-    const NAPShare = Number(vaultInfo.allocPointNAP) / 300;
+    const NAPShare = Number(vaultInfo.allocPointNAP) / 290;
 
     const ZZZaveragePerBlock = ZZZShare / formatResult(rewardsPerBlock.ZZZaveragePerBlock);
     const NAPaveragePerBlock = NAPShare / formatResult(rewardsPerBlock.NAPaveragePerBlock);
@@ -77,10 +81,17 @@ class VaultStore {
       totalTimelockBoost: Number(vaultInfo.totalTimelockBoost),
       totalStaked,
     };
-
+    const ZZZlastEpoch = formatResult(await this.vault.ZZZepochRewards(this.epoch - 1));
+    const NAPlastEpoch = formatResult(await this.vault.NAPepochRewards(this.epoch - 1));
+    const ZZZcurrentEpoch = formatResult(await this.vault.ZZZrewardsInThisEpoch());
+    const NAPcurrentEpoch = formatResult(await this.vault.NAPrewardsInThisEpoch());
     runInAction(() => {
       this.NAPb = formatResult(rewardsPerBlock.NAPaveragePerBlock);
       this.ZZZb = formatResult(rewardsPerBlock.ZZZaveragePerBlock);
+      this.ZZZlastEpoch = ZZZlastEpoch;
+      this.NAPlastEpoch = NAPlastEpoch;
+      this.ZZZcurrentEpoch = ZZZcurrentEpoch;
+      this.NAPcurrentEpoch = NAPcurrentEpoch;
     });
 
     runInAction(() => this.vaultData.set(vaultId.toString(), result));

@@ -26,7 +26,7 @@ const ReadmeStyles = {
 function VaultGlobal() {
   const [showReadme, setShowReadme] = useState(false);
   const { currentBlock } = EthStore;
-  const { epoch, epochStartBlock, NAPb, ZZZb } = VaultStore;
+  const { epoch, epochStartBlock, NAPb, ZZZb, ZZZlastEpoch, NAPlastEpoch, NAPcurrentEpoch, ZZZcurrentEpoch } = VaultStore;
 
   const canStartNewEpoch = epochStartBlock + 200000 - currentBlock <= 0;
   return (
@@ -51,12 +51,20 @@ function VaultGlobal() {
       <Modal isOpen={showReadme} onRequestClose={() => setShowReadme(false)} contentLabel="Vault Info" style={ReadmeStyles}>
         <VaultReadme />
       </Modal>
-      <div className="sub-header">
+      <div className="sub-header" style={{ textAlign: "center" }}>
         <div className="zzz-rewards">
           ZZZ avg per block: <b>{ZZZb} ZZZ</b>
         </div>
+        <div className="zzz-rewards">
+          last epoch total: <b>{ZZZlastEpoch} ZZZ</b> - current: <b>{ZZZcurrentEpoch} ZZZ</b>
+        </div>
+        <br />
+        <br />
         <div className="nap-rewards">
           NAP avg per block: <b>{NAPb} NAP</b>
+        </div>
+        <div className="zzz-rewards">
+          last epoch total: <b>{NAPlastEpoch} NAP</b> - current: <b>{NAPcurrentEpoch} NAP</b>
         </div>
       </div>
     </div>

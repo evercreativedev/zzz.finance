@@ -40,7 +40,7 @@ function Vault({ vaultId }: Props) {
 
   if (!vaultData || !vaultUserData || !vaultBoostData)
     return (
-      <div className="vault">
+      <div className="vault" style={{ backgroundColor: "black" }}>
         <div className="header">
           <div className="title">{vaultName} vault</div>
         </div>
