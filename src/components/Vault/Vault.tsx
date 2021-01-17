@@ -129,7 +129,7 @@ function Vault({ vaultId }: Props) {
               <a href={token.purchaseFrom} target="blank" rel="noopener noreferrer" className="vault-button get-token">
                 Get
               </a>
-              <div className={`vault-button disabled ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
+              <div className={`vault-button ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
                 Boost with {token.name}
               </div>
             </div>
@@ -158,7 +158,7 @@ function Vault({ vaultId }: Props) {
           const cost = costs[currentBoost][i];
           const bought = cost === 0;
           return (
-            <div className="vault-button vault-boost-button disabled" key={`boost-${p}-${i}`}>
+            <div className="vault-button vault-boost-button" key={`boost-${p}-${i}`}>
               {!bought ? (
                 <div className="boost" onClick={() => VaultStore.purchase(vaultId, currentBoostToken.address, i + 1)}>
                   {p}% boost <br />
@@ -177,15 +177,17 @@ function Vault({ vaultId }: Props) {
 
 const InteractionButtons = ({ inputValue, vaultId, hasTimelock }: { inputValue: string; vaultId: number; hasTimelock: boolean }) => (
   <>
-    <div className="vault-button disabled">Deposit</div>
+    <div className="vault-button" onClick={() => parseFloat(inputValue) > 0 && VaultStore.deposit(inputValue, vaultId)}>
+      Deposit
+    </div>
     <div
-      className={`vault-button disabled ${hasTimelock && "disabled"}`}
+      className={`vault-button ${hasTimelock && "disabled"}`}
       onClick={() => !hasTimelock && parseFloat(inputValue) > 0 && VaultStore.withdraw(inputValue, vaultId)}
     >
       Withdraw
     </div>
-    <div className="vault-button disabled">
-      Claim (<span role="img" aria-label="under construction"></span>🔧)
+    <div className="vault-button" onClick={() => VaultStore.claim(vaultId)}>
+      Claim
     </div>
   </>
 );
