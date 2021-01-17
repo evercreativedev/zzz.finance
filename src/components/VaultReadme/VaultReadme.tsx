@@ -48,7 +48,7 @@ function VaultReadme() {
         <p>Users have an option to timelock their stake for a period of 4 weeks - this gives user an 50% stake boost for the time being</p>
         <p>
           <b>
-            You have a 1-day period to withdraw your stake after the timelock ends. Trying to withdraw after it will RESET the timelock to 4
+            You have a 2-day period to withdraw your stake after the timelock ends. Trying to withdraw after it will RESET the timelock to 4
             weeks again. <i>This might be subject to change.</i>
           </b>
         </p>
