@@ -6,7 +6,7 @@ import { HomeContent, InfoBox, InfoBoxes, LearnTitle } from "./Learn.styles";
 
 const title = "Welcome to the ZZZ University.";
 const subtitle =
-  "Even if you've never used cryptocurrency before, we'll walk you through the basics of DeFi and the new features to the ZZZ ecosystem.";
+  "Even if you've never used cryptocurrency before, we'll walk you through the basics of DeFi and features of the ZZZ ecosystem.";
 
 function Learn() {
   return (
