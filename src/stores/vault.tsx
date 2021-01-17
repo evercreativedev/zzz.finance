@@ -127,8 +127,8 @@ class VaultStore {
     const blockPerYear = 2407905;
     if (ZZZPRICE && NAPPRICE && STAKEPRICE && vaultData) {
       const totalStaked = STAKEPRICE! * vaultData.totalStaked;
-      let ZZZYield = (vaultData.ZZZPerBlock * blockPerYear * NAPPRICE!) / totalStaked;
-      let NAPYield = (vaultData.NAPPerBlock * blockPerYear * ZZZPRICE!) / totalStaked;
+      let ZZZYield = (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE!) / totalStaked;
+      let NAPYield = (vaultData.NAPPerBlock * blockPerYear * NAPPRICE!) / totalStaked;
       return ZZZYield + NAPYield;
     } else {
       return 0;
