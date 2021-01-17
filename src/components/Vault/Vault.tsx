@@ -85,6 +85,7 @@ function Vault({ vaultId }: Props) {
           APY: <b>{!isNaN(APY) ? APY : 0}%</b>
         </div>
       </div>
+
       <div className="vault-interactions">
         <div className="vault-balance" onClick={() => setInputValue(stakeBalance.toString())}>
           balance: <b>{stakeBalance}</b> {vaultName}

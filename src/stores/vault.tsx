@@ -18,6 +18,8 @@ class VaultStore {
   @observable vaultAmount: number = 0;
   @observable epoch = 0;
   @observable epochStartBlock = 0;
+  @observable NAPb = 0;
+  @observable ZZZb = 0;
   contracts = vaultContracts.homestead;
   vault: any;
   multiplier: any;
@@ -57,8 +59,8 @@ class VaultStore {
     const ZZZShare = Number(vaultInfo.allocPointZZZ) / 300;
     const NAPShare = Number(vaultInfo.allocPointNAP) / 300;
 
-    const ZZZaveragePerBlock = formatResult(rewardsPerBlock.ZZZaveragePerBlock) / ZZZShare;
-    const NAPaveragePerBlock = formatResult(rewardsPerBlock.NAPaveragePerBlock) / NAPShare;
+    const ZZZaveragePerBlock = ZZZShare / formatResult(rewardsPerBlock.ZZZaveragePerBlock);
+    const NAPaveragePerBlock = NAPShare / formatResult(rewardsPerBlock.NAPaveragePerBlock);
 
     const result: VaultInfo = {
       token: stakingToken,
@@ -75,6 +77,11 @@ class VaultStore {
       totalTimelockBoost: Number(vaultInfo.totalTimelockBoost),
       totalStaked,
     };
+
+    runInAction(() => {
+      this.NAPb = formatResult(rewardsPerBlock.NAPaveragePerBlock);
+      this.ZZZb = formatResult(rewardsPerBlock.ZZZaveragePerBlock);
+    });
 
     runInAction(() => this.vaultData.set(vaultId.toString(), result));
 
@@ -118,11 +125,11 @@ class VaultStore {
     if (vaultId === 2) STAKEPRICE = PriceStore.prices.get("ZZZNAPLPV2");
     if (vaultId === 3) STAKEPRICE = PriceStore.prices.get("NAPV2");
 
-    if (EthStore.networkName !== "homestead") {
-      ZZZPRICE = 50;
-      NAPPRICE = 0.005;
-      STAKEPRICE = 240;
-    }
+    // if (EthStore.networkName !== "homestead") {
+    //   ZZZPRICE = 50;
+    //   NAPPRICE = 0.005;
+    //   STAKEPRICE = 240;
+    // }
 
     const blockPerYear = 2407905;
     if (ZZZPRICE && NAPPRICE && STAKEPRICE && vaultData) {
