@@ -32,7 +32,7 @@ const LearnBoxes: TLearn[] = [
     text: "What is impermanent loss? How does automatic market making work?",
     image: uniswap,
     color: "#9c29ac",
-    link: "https://www.youtube.com/watch?v=41WVTwmSPng",
+    link: "https://www.youtube.com/watch?v=8XJ1MSTEuU0",
   },
 ];
 export default LearnBoxes;
