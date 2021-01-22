@@ -1,8 +1,5 @@
 import React from "react";
-import whitebit from "assets/whitebit_grey.webp";
-import cointiger from "assets/cointiger.webp";
 import coinmarket from "assets/coinmarketcap.webp";
-import bilaxy from "assets/bilaxy.webp";
 import uniswap from "assets/whitebite.webp";
 
 import coingecko from "assets/coingecko.webp";
@@ -29,7 +26,7 @@ function Listings() {
               height: "auto",
             }}
           />
-          ZZZ
+          ZZZv2
         </a>
         <a
           className="listing nap-listing"
@@ -47,7 +44,7 @@ function Listings() {
               height: "auto",
             }}
           />
-          NAP
+          NAPv2
         </a>
         <a
           className="listing dream-listing"
@@ -66,51 +63,10 @@ function Listings() {
             }}
           />
           DREAM
-        </a>
+      </a>
       </div>
-      <h1 style={{ gridColumn: "1/3", justifySelf: "center" }}>Exchanges</h1>
-      <a className="listing" href="https://whitebit.com/referral/zzz_finance1" target="blank" rel="noopener noreferrer">
-        WhiteBIT
-        <img
-          className="whitebit-image"
-          src={whitebit}
-          alt="whitebit"
-          style={{
-            // backgroundColor: "#27221f",
-            padding: "8px",
-            width: "165px",
-            height: "auto",
-          }}
-        />
-      </a>
-      <a className="listing" href="https://bilaxy.com/trade/ZZZ_ETH" target="blank" rel="noopener noreferrer">
-        Bilaxy
-        <img
-          className="bilaxy-image"
-          src={bilaxy}
-          alt="bilaxy"
-          style={{
-            padding: "8px",
-            width: "128px",
-            height: "auto",
-          }}
-        />
-      </a>
-      <a className="listing" href="https://www.cointiger.com/en-us/#/trade_center?coin=zzz_usdt" target="blank" rel="noopener noreferrer">
-        Cointiger
-        <img
-          className="cointiger-image"
-          src={cointiger}
-          alt="cointiger"
-          style={{
-            padding: "8px",
-            width: "128px",
-            height: "auto",
-          }}
-        />
-      </a>
       <h1 style={{ gridColumn: "1/3", justifySelf: "center" }}>Find us on</h1>
-      <a className="listing" href="https://www.coingecko.com/en/coins/zzz-finance" target="blank" rel="noopener noreferrer">
+      <a className="listing" href="https://www.coingecko.com/en/coins/zzz-finance-v2" target="blank" rel="noopener noreferrer">
         Coingecko
         <img
           className="coingecko-image"
@@ -123,7 +79,7 @@ function Listings() {
           }}
         />
       </a>
-      <a className="listing" href="https://coinmarketcap.com/currencies/zzz-finance/" style={{ gridColumn: "1 / 3" }}>
+      <a className="listing" href="https://coinmarketcap.com/currencies/zzz-finance-v2/" style={{ gridColumn: "1 / 3" }}>
         Coinmarketcap
         <img
           className="coinmarket-image"
