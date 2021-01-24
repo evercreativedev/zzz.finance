@@ -26,7 +26,7 @@ function Listings() {
               height: "auto",
             }}
           />
-          ZZZ
+          ZZZv2
         </a>
         <a
           className="listing nap-listing"
@@ -44,7 +44,7 @@ function Listings() {
               height: "auto",
             }}
           />
-          NAP
+          NAPv2
         </a>
         <a
           className="listing dream-listing"
