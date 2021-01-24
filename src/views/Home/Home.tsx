@@ -1,5 +1,4 @@
 import discordIcon from "assets/discord_logo.webp";
-import forumsIcon from "assets/forums_logo.png";
 import mediumIcon from "assets/medium_icon.webp";
 import telegramIcon from "assets/telegram_logo.webp";
 import certiklogo from "assets/certik.png";
@@ -71,7 +70,6 @@ function Home() {
             <SocialLink title="Twitter" icon={twitterIcon} href="https://twitter.com/zzzfinance/" />
             <SocialLink title="Medium" icon={mediumIcon} href="https://medium.com/@zzzfinance/" />
             <SocialLink title="Discord" icon={discordIcon} href="https://discord.gg/DQXmtB3" />
-            <SocialLink title="Forums" icon={forumsIcon} href="https://forums.zzz.finance/" />
           </SocialLinks>
         </HomeTitle>
       </Layout.ExtraContent>
