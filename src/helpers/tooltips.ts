@@ -1,6 +1,11 @@
 import { BasePoolData, UserPoolData } from "types";
 
-export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsClosed: boolean = false, inputAmount?: number) => (
+export default (
+  userPoolData?: UserPoolData,
+  basePoolData?: BasePoolData,
+  poolsClosed: boolean = false,
+  inputAmount?: number
+) => (
   key: string,
   boostCost?: number | null,
   boostAmount?: string,
@@ -8,12 +13,23 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
   tooltipBoostLevel?: number
 ) => {
   if (!userPoolData || !basePoolData) return;
-  const inputMakesSense = inputAmount && inputAmount !== 0 && !isNaN(inputAmount);
+  const inputMakesSense =
+    inputAmount && inputAmount !== 0 && !isNaN(inputAmount);
 
-  const { tokenAmount, staked, rewards, boostTokenAmount, multiplier, boostLevel } = userPoolData;
+  const {
+    tokenAmount,
+    staked,
+    rewards,
+    boostTokenAmount,
+    multiplier,
+    boostLevel,
+  } = userPoolData;
   switch (key) {
     case "stake": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus === 1) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus === 1
+      ) {
         return "Pool is on migration state.";
       }
       if (poolsClosed) {
@@ -29,7 +45,10 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
       }
     }
     case "withdraw": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus < 2) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus < 2
+      ) {
         return "You can withdraw V2 tokens after pool is finished..";
       }
       if (staked === 0) {
@@ -43,7 +62,10 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
       }
     }
     case "withdrawall": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus < 2) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus < 2
+      ) {
         return "You can withdraw V2 tokens after pool is finished..";
       }
       if (staked === 0) {
@@ -53,7 +75,10 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
       }
     }
     case "claim": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus < 2) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus < 2
+      ) {
         return "You can claim V2 rewards after pool is finished..";
       }
       if (rewards.tokens === 0) {
@@ -63,7 +88,10 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
       }
     }
     case "exit": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus < 2) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus < 2
+      ) {
         return "You can exit with V2 tokens after pool is finished..";
       }
       if (staked === 0 && rewards.tokens === 0) {
@@ -73,7 +101,10 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
       }
     }
     case "max": {
-      if (basePoolData.migrationStatus != null && basePoolData.migrationStatus === 1) {
+      if (
+        basePoolData.migrationStatus != null &&
+        basePoolData.migrationStatus === 1
+      ) {
         return "Migration in progress..";
       }
       if (poolsClosed) {
@@ -86,9 +117,13 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
     }
     case "boost-amount": {
       if (!effectiveStakePool) {
-        return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(0)}%. That means the yield is multiplied by ${multiplier}`;
+        return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(
+          0
+        )}%. That means the yield is multiplied by ${multiplier}`;
       } else {
-        return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(0)}%. That means the your stake is multiplied by ${multiplier}`;
+        return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(
+          0
+        )}%. That means the your stake is multiplied by ${multiplier}`;
       }
     }
     case "boost": {
@@ -107,7 +142,9 @@ export default (userPoolData?: UserPoolData, basePoolData?: BasePoolData, poolsC
         if (!effectiveStakePool) {
           return `Your multiplier is ${multiPercentage}%. That means the yield is multiplied by ${multiplier}`;
         } else {
-          return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(0)}%. That means the your stake is multiplied by ${multiplier}`;
+          return `Your multiplier is ${((multiplier! - 1) * 100).toFixed(
+            0
+          )}%. That means the your stake is multiplied by ${multiplier}`;
         }
       }
     }

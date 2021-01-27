@@ -16,25 +16,41 @@ import {
   getBoostCosts,
 } from "eth/methods";
 
-export async function getPoolUserData(account: string, pool: IPool, provider: any): Promise<UserPoolData> {
+export async function getPoolUserData(
+  account: string,
+  pool: IPool,
+  provider: any
+): Promise<UserPoolData> {
   return {
     id: pool.id,
     staked: await getStakedBalance(account, pool, provider),
-    multiplier: pool.boostToken && (await getBoostMultiplier(account, pool, provider)),
-    boostLevel: pool.boostToken && (await getBoostLevel(account, pool, provider)),
+    multiplier:
+      pool.boostToken && (await getBoostMultiplier(account, pool, provider)),
+    boostLevel:
+      pool.boostToken && (await getBoostLevel(account, pool, provider)),
     rewards: await getRewardsAvailable(account, pool, provider),
     hasAllowance: await checkAllowance(account, pool, provider),
-    hasBoostAllowance: pool.boostToken && (await checkBoostAllowance(account, pool, provider)),
+    hasBoostAllowance:
+      pool.boostToken && (await checkBoostAllowance(account, pool, provider)),
     tokenAmount: await getERC20balance(account, pool.token, provider),
-    boostTokenAmount: pool.boostToken && (await getERC20balance(account, pool.boostToken, provider)),
-    boostCosts: pool.boostToken && (await getBoostCosts(account, pool, provider)),
+    boostTokenAmount:
+      pool.boostToken &&
+      (await getERC20balance(account, pool.boostToken, provider)),
+    boostCosts:
+      pool.boostToken && (await getBoostCosts(account, pool, provider)),
   };
 }
 
-export async function getPoolValues(pool: IPool, provider: any): Promise<BasePoolData> {
+export async function getPoolValues(
+  pool: IPool,
+  provider: any
+): Promise<BasePoolData> {
   const poolContract = new ethers.Contract(pool.address, pool.abi, provider);
 
-  const staked = formatResult(await getTotalSupply(poolContract, pool), pool.token.decimals);
+  const staked = formatResult(
+    await getTotalSupply(poolContract, pool),
+    pool.token.decimals
+  );
   let migrationStatus;
   if (pool.isMigrationPool) {
     migrationStatus = Number(await poolContract.migrationStatus());
@@ -58,7 +74,15 @@ export async function getPoolValues(pool: IPool, provider: any): Promise<BasePoo
     TVL = Math.ceil(staked * uniPrice);
   } else {
     underlyingTokens.token1 = 0;
-    TVL = Math.ceil(staked * (await getPriceFor(pool.token, provider, pool.uniToken, pool.uniPairToken)));
+    TVL = Math.ceil(
+      staked *
+        (await getPriceFor(
+          pool.token,
+          provider,
+          pool.uniToken,
+          pool.uniPairToken
+        ))
+    );
   }
 
   const APY = await getYields(pool, provider);

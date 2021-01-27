@@ -30,6 +30,9 @@
     "styled-components": "^5.2.0"
   },
   "scripts": {
+    "format": "prettier --write src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x} --max-warnings=0",
+    "lint-fix": "eslint --fix src/**/*.ts{,x}",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -61,7 +64,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "ZZZ Platform.",
+  "description": "ZZZ Platform",
   "main": "index.js",
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -87,6 +90,7 @@
   "license": "ISC",
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "yarn lint --fix",
       "prettier --write"
     ]
   },
