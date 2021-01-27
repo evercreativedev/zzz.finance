@@ -30,12 +30,24 @@ class VaultStore {
   boostTokens: any;
 
   @action initialize = async () => {
-    this.vault = new Contract(this.contracts.vault.address, this.contracts.vault.abi, EthStore.signer);
-    this.multiplier = new Contract(this.contracts.multiplier.address, this.contracts.multiplier.abi, EthStore.signer);
-    this.boostTokens = this.contracts.boostTokens.map((token: Token) => new Contract(token.address, token.abi, EthStore.signer));
+    this.vault = new Contract(
+      this.contracts.vault.address,
+      this.contracts.vault.abi,
+      EthStore.signer
+    );
+    this.multiplier = new Contract(
+      this.contracts.multiplier.address,
+      this.contracts.multiplier.abi,
+      EthStore.signer
+    );
+    this.boostTokens = this.contracts.boostTokens.map(
+      (token: Token) => new Contract(token.address, token.abi, EthStore.signer)
+    );
     const vaultAmount = Number(await this.vault.vaultAmount());
     const epoch = Number(await this.vault.epoch());
-    const epochStartBlock = Number(await this.vault.epochCalculationStartBlock());
+    const epochStartBlock = Number(
+      await this.vault.epochCalculationStartBlock()
+    );
 
     runInAction(() => (this.vaultAmount = vaultAmount));
     runInAction(() => (this.epoch = epoch));
@@ -46,7 +58,11 @@ class VaultStore {
     // Get the pool info, only one for now.
     const vaultInfo: any = await this.vault.vaultInfo(vaultId);
     // Get the token used and it's balance in vault.
-    const stakingToken = new Contract(vaultInfo.token, require("../eth/abi/erc20_abi.json"), EthStore.signer);
+    const stakingToken = new Contract(
+      vaultInfo.token,
+      require("../eth/abi/erc20_abi.json"),
+      EthStore.signer
+    );
     const stakingTokenName = await stakingToken.name();
 
     let totalStaked = 0;
@@ -56,15 +72,23 @@ class VaultStore {
     } else if (stakingTokenName === "NAP V2") {
       totalStaked = formatResult(await this.vault.userNAP());
     } else {
-      totalStaked = formatResult(await stakingToken.balanceOf(this.vault.address), 18);
+      totalStaked = formatResult(
+        await stakingToken.balanceOf(this.vault.address),
+        18
+      );
     }
-    const rewardsPerBlock = await this.vault.averageFeesPerBlockEpoch();
 
-    const ZZZShare = Number(vaultInfo.allocPointZZZ) / 300;
-    const NAPShare = Number(vaultInfo.allocPointNAP) / 290;
+    const rewardsPerBlock = await this.vault.averageFeesPerBlockSinceStart();
 
-    const ZZZaveragePerBlock = ZZZShare / formatResult(rewardsPerBlock.ZZZaveragePerBlock);
-    const NAPaveragePerBlock = NAPShare / formatResult(rewardsPerBlock.NAPaveragePerBlock);
+    const ZZZShare = Number(vaultInfo.allocPointZZZ) / 295;
+    const NAPShare = Number(vaultInfo.allocPointNAP) / 300;
+
+    console.log("shares", ZZZShare, NAPShare, vaultId);
+
+    const ZZZaveragePerBlock =
+      formatResult(rewardsPerBlock.ZZZaveragePerBlock) * ZZZShare;
+    const NAPaveragePerBlock =
+      formatResult(rewardsPerBlock.NAPaveragePerBlock) * NAPShare;
 
     const result: VaultInfo = {
       token: stakingToken,
@@ -81,10 +105,18 @@ class VaultStore {
       totalTimelockBoost: Number(vaultInfo.totalTimelockBoost),
       totalStaked,
     };
-    const ZZZlastEpoch = formatResult(await this.vault.ZZZepochRewards(this.epoch - 1));
-    const NAPlastEpoch = formatResult(await this.vault.NAPepochRewards(this.epoch - 1));
-    const ZZZcurrentEpoch = formatResult(await this.vault.ZZZrewardsInThisEpoch());
-    const NAPcurrentEpoch = formatResult(await this.vault.NAPrewardsInThisEpoch());
+    const ZZZlastEpoch = formatResult(
+      await this.vault.ZZZepochRewards(this.epoch - 1)
+    );
+    const NAPlastEpoch = formatResult(
+      await this.vault.NAPepochRewards(this.epoch - 1)
+    );
+    const ZZZcurrentEpoch = formatResult(
+      await this.vault.ZZZrewardsInThisEpoch()
+    );
+    const NAPcurrentEpoch = formatResult(
+      await this.vault.NAPrewardsInThisEpoch()
+    );
     runInAction(() => {
       this.NAPb = formatResult(rewardsPerBlock.NAPaveragePerBlock);
       this.ZZZb = formatResult(rewardsPerBlock.ZZZaveragePerBlock);
@@ -97,24 +129,37 @@ class VaultStore {
     runInAction(() => this.vaultData.set(vaultId.toString(), result));
 
     const userInfo: any = await this.vault.userInfo(vaultId, EthStore.account);
-    const pendingRewards = await this.vault.pendingRewards(vaultId, EthStore.account);
+    const pendingRewards = await this.vault.pendingRewards(
+      vaultId,
+      EthStore.account
+    );
     const userResult: VaultUserInfo = {
-      stakeBalance: formatResult(await stakingToken.balanceOf(EthStore.account)),
+      stakeBalance: formatResult(
+        await stakingToken.balanceOf(EthStore.account)
+      ),
       amount: formatResult(userInfo.amount),
       ZZZRewardDebt: formatResult(userInfo.ZZZRewardDebt),
       NAPRewardDebt: formatResult(userInfo.NAPRewardDebt),
       timelockEnd: Number(userInfo.timelockEnd),
       timelockBoost: formatResult(userInfo.timelockBoost),
-      boostAmount: formatResult(await this.vault.getUserBoost(vaultId, EthStore.account)),
+      boostAmount: formatResult(
+        await this.vault.getUserBoost(vaultId, EthStore.account)
+      ),
       APY: await this.calculateAPY(vaultId),
-      hasAllowance: formatResult(await stakingToken.allowance(EthStore.account, this.vault.address)) > 1000,
+      hasAllowance:
+        formatResult(
+          await stakingToken.allowance(EthStore.account, this.vault.address)
+        ) > 1000,
       zzzRewards: formatResult(pendingRewards.zzzRewards),
       napRewards: formatResult(pendingRewards.napRewards),
     };
 
     const boostAllowances: boolean[] = await Promise.all(
       this.boostTokens.map(
-        async (contract: Contract) => formatResult(await contract.allowance(EthStore.account, this.vault.address)) > 1000
+        async (contract: Contract) =>
+          formatResult(
+            await contract.allowance(EthStore.account, this.vault.address)
+          ) > 1000
       )
     );
 
@@ -136,17 +181,21 @@ class VaultStore {
     if (vaultId === 2) STAKEPRICE = PriceStore.prices.get("ZZZNAPLPV2");
     if (vaultId === 3) STAKEPRICE = PriceStore.prices.get("NAPV2");
 
-    // if (EthStore.networkName !== "homestead") {
-    //   ZZZPRICE = 50;
-    //   NAPPRICE = 0.005;
-    //   STAKEPRICE = 240;
-    // }
-
     const blockPerYear = 2407905;
     if (ZZZPRICE && NAPPRICE && STAKEPRICE && vaultData) {
       const totalStaked = STAKEPRICE! * vaultData.totalStaked;
-      let ZZZYield = (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE!) / totalStaked;
-      let NAPYield = (vaultData.NAPPerBlock * blockPerYear * NAPPRICE!) / totalStaked;
+      let ZZZYield =
+        (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE!) / totalStaked;
+      let NAPYield =
+        (vaultData.NAPPerBlock * blockPerYear * NAPPRICE!) / totalStaked;
+      console.log(
+        vaultId,
+        totalStaked,
+        ZZZYield,
+        NAPYield,
+        vaultData.ZZZPerBlock,
+        vaultData.NAPPerBlock
+      );
       return ZZZYield + NAPYield;
     } else {
       return 0;
@@ -157,7 +206,13 @@ class VaultStore {
     const currentLevels: number[] = await Promise.all(
       this.contracts.boostTokens.map(async (token: Token) => {
         return Number(
-          await this.multiplier.getLastTokenLevelForUser(this.vault.address, EthStore.account, token.address, this.epoch, vaultId)
+          await this.multiplier.getLastTokenLevelForUser(
+            this.vault.address,
+            EthStore.account,
+            token.address,
+            this.epoch,
+            vaultId
+          )
         );
       })
     );
@@ -168,7 +223,14 @@ class VaultStore {
           await Promise.all(
             [1, 2, 3, 4].map(async (level) =>
               level > currentLevels[index]
-                ? formatResult(await this.vault.calculateCost(vaultId, EthStore.account, token.address, level))
+                ? formatResult(
+                    await this.vault.calculateCost(
+                      vaultId,
+                      EthStore.account,
+                      token.address,
+                      level
+                    )
+                  )
                 : 0
             )
           )
@@ -184,44 +246,69 @@ class VaultStore {
 
   deposit = async (amount: string, vaultId: number) => {
     const parsedAmount = parseEther(amount);
-    await handleTransaction(async () => await this.vault.deposit(vaultId, parsedAmount), `deposit of ${amount}`, amount);
+    await handleTransaction(
+      async () => await this.vault.deposit(vaultId, parsedAmount),
+      `deposit of ${amount}`,
+      amount
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
 
   withdraw = async (amount: string, vaultId: number) => {
     const parsedAmount = parseEther(amount);
-    await handleTransaction(async () => await this.vault.withdraw(vaultId, parsedAmount), `withdraw of ${amount}`, amount);
+    await handleTransaction(
+      async () => await this.vault.withdraw(vaultId, parsedAmount),
+      `withdraw of ${amount}`,
+      amount
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
 
   newEpoch = async () => {
-    await handleTransaction(async () => await this.vault.startNewEpoch(), `new epoch`);
+    await handleTransaction(
+      async () => await this.vault.startNewEpoch(),
+      `new epoch`
+    );
     return true;
   };
 
   timelock = async (vaultId: number) => {
-    await handleTransaction(async () => await this.vault.timelock(vaultId), `timelock`);
+    await handleTransaction(
+      async () => await this.vault.timelock(vaultId),
+      `timelock`
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
 
   claim = async (vaultId: number) => {
-    await handleTransaction(async () => await this.vault.claim(vaultId), `claim`);
+    await handleTransaction(
+      async () => await this.vault.claim(vaultId),
+      `claim`
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
 
   approve = async (token: Contract, vaultId: number) => {
-    await handleTransaction(async () => await token.approve(this.vault.address, parseEther("100000000000")), `approval`);
+    await handleTransaction(
+      async () =>
+        await token.approve(this.vault.address, parseEther("100000000000")),
+      `approval`
+    );
     await this.fetchVaultData(vaultId);
     return true;
   };
 
   boostApprove = async (id: number, vaultId: number) => {
     await handleTransaction(
-      async () => await this.boostTokens[id].approve(this.vault.address, parseEther("100000000000")),
+      async () =>
+        await this.boostTokens[id].approve(
+          this.vault.address,
+          parseEther("100000000000")
+        ),
       `boost approval`
     );
     await this.fetchVaultData(vaultId);
@@ -229,7 +316,10 @@ class VaultStore {
   };
 
   purchase = async (vaultId: number, token: string, level: number) => {
-    await handleTransaction(async () => await this.vault.purchase(vaultId, token, level), `boost purchase`);
+    await handleTransaction(
+      async () => await this.vault.purchase(vaultId, token, level),
+      `boost purchase`
+    );
     await this.fetchVaultData(vaultId);
     await this.fetchBoostData(vaultId);
     return true;
