@@ -42,7 +42,9 @@ export function noExponents(number: number) {
 }
 
 export function poolRetiredOrClosed(pool: Pool) {
-  const result = pool.poolStatus === PoolStatus.Closed || pool.poolStatus === PoolStatus.Retired;
+  const result =
+    pool.poolStatus === PoolStatus.Closed ||
+    pool.poolStatus === PoolStatus.Retired;
   return result;
 }
 
@@ -52,7 +54,10 @@ export function isBugged(pool: Pool) {
   }
 }
 
-export async function getTotalSupply(poolContract: ethers.Contract, poolData: Pool) {
+export async function getTotalSupply(
+  poolContract: ethers.Contract,
+  poolData: Pool
+) {
   if (poolData.usesNewAbi) {
     return await poolContract._totalSupply();
   } else {

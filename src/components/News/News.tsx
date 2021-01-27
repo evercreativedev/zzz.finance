@@ -25,7 +25,10 @@ function News() {
         {newsItem.text()}
         {newsItem.extra && newsItem.extra()}
       </NewsContentLink>
-      <div className="news-browse" onClick={() => setNewsIndex((old) => old + 1)}>
+      <div
+        className="news-browse"
+        onClick={() => setNewsIndex((old) => old + 1)}
+      >
         More news
       </div>
     </NewsContainer>

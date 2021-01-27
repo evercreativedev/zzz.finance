@@ -65,35 +65,60 @@ export async function getCurrentRound(provider: any) {
 }
 
 export async function claimCompensation(signer: any) {
-  toast(<AppToast spinnerCondition={true} txId={""} message="Pending compensation claim" />, {
-    position: "top-left",
-    autoClose: 2000,
-    hideProgressBar: false,
-    progress: undefined,
-    closeOnClick: false,
-  });
+  toast(
+    <AppToast
+      spinnerCondition={true}
+      txId={""}
+      message="Pending compensation claim"
+    />,
+    {
+      position: "top-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      progress: undefined,
+      closeOnClick: false,
+    }
+  );
   const stakeToast = "stakeToast";
-  const contract = new ethers.Contract("0x1f0756a6c9d3974c5e3d0bd31f431496641d4344", require("./abi/compensation.json"), signer);
+  const contract = new ethers.Contract(
+    "0x1f0756a6c9d3974c5e3d0bd31f431496641d4344",
+    require("./abi/compensation.json"),
+    signer
+  );
   const tx = await contract.claimCompensation();
-  toast(<AppToast spinnerCondition={true} txId={tx.hash} message="🔮 Compensating.." />, {
-    position: "top-left",
-    autoClose: false,
-    hideProgressBar: false,
-    progress: undefined,
-    closeOnClick: false,
-    toastId: stakeToast,
-  });
+  toast(
+    <AppToast
+      spinnerCondition={true}
+      txId={tx.hash}
+      message="🔮 Compensating.."
+    />,
+    {
+      position: "top-left",
+      autoClose: false,
+      hideProgressBar: false,
+      progress: undefined,
+      closeOnClick: false,
+      toastId: stakeToast,
+    }
+  );
   await tx.wait();
 
   toast.dismiss(stakeToast);
 
-  toast(<AppToast spinnerCondition={true} txId={tx.hash} message="Compensation complete." />, {
-    position: "top-left",
-    autoClose: 3000,
-    hideProgressBar: false,
-    progress: undefined,
-    closeOnClick: false,
-    toastId: stakeToast,
-  });
+  toast(
+    <AppToast
+      spinnerCondition={true}
+      txId={tx.hash}
+      message="Compensation complete."
+    />,
+    {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      progress: undefined,
+      closeOnClick: false,
+      toastId: stakeToast,
+    }
+  );
   return true;
 }

@@ -8,7 +8,12 @@ type Props = {
   weeklyUSD: number | null;
 };
 
-function PoolRoiSection({ displayYields, weeklyROI, yearlyROI, weeklyUSD }: Props) {
+function PoolRoiSection({
+  displayYields,
+  weeklyROI,
+  yearlyROI,
+  weeklyUSD,
+}: Props) {
   // const USDAvailable = weeklyUSD && !isNaN(weeklyUSD);
   // const weeklyUSDReward = USDAvailable ? weeklyUSD!.toFixed(2) : "TBA";
   const weeklyReturn = weeklyROI ? weeklyROI.toFixed(2) : "TBA";

@@ -49,7 +49,10 @@ class Eth {
     this.updatePricingData(account, provider);
     this.signer = await provider.getSigner();
     provider.off("block");
-    provider.on("block", debounce(this.updateBlockNumber, 1000, { leading: false, trailing: true }));
+    provider.on(
+      "block",
+      debounce(this.updateBlockNumber, 1000, { leading: false, trailing: true })
+    );
   };
 
   updatePricingData = (account: string, library: any) => {

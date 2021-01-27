@@ -19,7 +19,11 @@ enum PoolStates {
 }
 
 // Start the crop, called from the listener and useEffect when the component renders
-const startPool = async (poolContract: ethers.Contract, setPoolState: Function, setEndDate: Function) => {
+const startPool = async (
+  poolContract: ethers.Contract,
+  setPoolState: Function,
+  setEndDate: Function
+) => {
   const periodFinish = await poolContract.periodFinish();
   setEndDate(new Date(periodFinish * 1000));
   setPoolState(PoolStates.Started);
@@ -45,10 +49,14 @@ function Timer({ pool }: Props) {
   // Duration of the pool reward drip
   const [duration, setDuration] = useState(0);
 
-  const poolStartTimerNotReady = poolState === PoolStates.Upcoming && !timeUntilStart;
-  const poolStartTimerReady = poolState === PoolStates.Upcoming && timeUntilStart;
+  const poolStartTimerNotReady =
+    poolState === PoolStates.Upcoming && !timeUntilStart;
+  const poolStartTimerReady =
+    poolState === PoolStates.Upcoming && timeUntilStart;
 
-  const poolEndTimerNotReady = poolState === PoolStates.WaitingRewards || (poolState === PoolStates.Started && !timeUntilEnd);
+  const poolEndTimerNotReady =
+    poolState === PoolStates.WaitingRewards ||
+    (poolState === PoolStates.Started && !timeUntilEnd);
   const poolEndTimerReady = poolState === PoolStates.Started && timeUntilEnd;
 
   // Listen for the reward added event.
@@ -117,7 +125,9 @@ function Timer({ pool }: Props) {
   }, [endTime]);
 
   if (poolStartTimerNotReady || poolEndTimerNotReady) {
-    return <Spinner width={18} height={18} type="ThreeDots" condition={false} />;
+    return (
+      <Spinner width={18} height={18} type="ThreeDots" condition={false} />
+    );
   }
 
   if (poolState === PoolStates.Finished || poolRetiredOrClosed(pool)) {
@@ -133,7 +143,8 @@ function Timer({ pool }: Props) {
               Starts in:
             </span>
             <div className="times">
-              {timeUntilStart.days}d {timeUntilStart.hours}h {timeUntilStart.minutes}m {timeUntilStart.seconds}s
+              {timeUntilStart.days}d {timeUntilStart.hours}h{" "}
+              {timeUntilStart.minutes}m {timeUntilStart.seconds}s
             </div>
           </div>
         )}
@@ -153,7 +164,8 @@ function Timer({ pool }: Props) {
               ⏰
             </span>
             <span>
-              {timeUntilEnd!.days}d {timeUntilEnd!.hours}h {timeUntilEnd!.minutes}m {timeUntilEnd!.seconds}s{" "}
+              {timeUntilEnd!.days}d {timeUntilEnd!.hours}h{" "}
+              {timeUntilEnd!.minutes}m {timeUntilEnd!.seconds}s{" "}
             </span>
           </div>
         </div>

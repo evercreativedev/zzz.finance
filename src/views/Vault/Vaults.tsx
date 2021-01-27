@@ -43,7 +43,10 @@ function Vaults() {
     return (
       <Layout view="Compensation" type="vertical">
         <Layout.MainContent view="compensation" backgroundColor=" rgb(0, 0, 0)">
-          <div className="vaults" style={{ display: "flex", justifyContent: "center", flex: 1 }}>
+          <div
+            className="vaults"
+            style={{ display: "flex", justifyContent: "center", flex: 1 }}
+          >
             <Loader type="Circles" width={150} height={150} color="white" />;
           </div>
         </Layout.MainContent>

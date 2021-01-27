@@ -2,7 +2,10 @@ import img_join_convo from "assets/join_convo.png";
 import img_governance from "assets/justice.png";
 import Layout from "components/Layout";
 import React from "react";
-import { GovernanceTitle, GovernanceIframe } from "views/Governance/Governance.styles";
+import {
+  GovernanceTitle,
+  GovernanceIframe,
+} from "views/Governance/Governance.styles";
 
 const title = "Vote on the future of ZZZ";
 
@@ -12,10 +15,25 @@ function Governance() {
       <Layout.ExtraGovernanceContent>
         <GovernanceTitle>
           <div id="title">{title}</div>
-          <img className="title-image" src={img_governance} id="subtitle" alt="governance" />
+          <img
+            className="title-image"
+            src={img_governance}
+            id="subtitle"
+            alt="governance"
+          />
           <div className="discuss-container">
-            <img className="convo-image" src={img_join_convo} id="subtitle" alt="governance" />
-            <a href="https://forums.zzz.finance" target="blank" rel="noopener noreferrer" style={{ pointerEvents: "none", opacity: "0.4" }}>
+            <img
+              className="convo-image"
+              src={img_join_convo}
+              id="subtitle"
+              alt="governance"
+            />
+            <a
+              href="https://forums.zzz.finance"
+              target="blank"
+              rel="noopener noreferrer"
+              style={{ pointerEvents: "none", opacity: "0.4" }}
+            >
               <button className="join-button">
                 <s>Discuss</s> (offline)
               </button>
@@ -24,7 +42,11 @@ function Governance() {
         </GovernanceTitle>
       </Layout.ExtraGovernanceContent>
       <Layout.MainContent view="governance">
-        <GovernanceIframe className="governance-frame" src="https://snapshot.page/#/zzz-finance" title="snapshot-governance" />
+        <GovernanceIframe
+          className="governance-frame"
+          src="https://snapshot.page/#/zzz-finance"
+          title="snapshot-governance"
+        />
         {/* <GovernanceContent>
           <div className="placeholder">COMING SOON &trade;</div>
           <div className="container">

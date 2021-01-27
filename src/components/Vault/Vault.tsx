@@ -52,7 +52,16 @@ function Vault({ vaultId }: Props) {
 
   const { boostTokenAllowances } = VaultStore;
   const { totalStaked, token } = vaultData;
-  const { amount, boostAmount, APY, hasAllowance, zzzRewards, napRewards, timelockEnd, stakeBalance } = vaultUserData;
+  const {
+    amount,
+    boostAmount,
+    APY,
+    hasAllowance,
+    zzzRewards,
+    napRewards,
+    timelockEnd,
+    stakeBalance,
+  } = vaultUserData;
   const { costs } = vaultBoostData;
   const currentBoostToken = boostTokens[currentBoost];
 
@@ -67,7 +76,10 @@ function Vault({ vaultId }: Props) {
         <div className="user-staked">
           assets: <b>{totalStaked}</b> {vaultName}
         </div>
-        <div className="total-staked" onClick={() => setInputValue(amount.toString())}>
+        <div
+          className="total-staked"
+          onClick={() => setInputValue(amount.toString())}
+        >
           your stake: <b>{amount}</b> {vaultName}
         </div>
         <div className="bonus-staked">
@@ -87,7 +99,10 @@ function Vault({ vaultId }: Props) {
       </div>
 
       <div className="vault-interactions">
-        <div className="vault-balance" onClick={() => setInputValue(stakeBalance.toString())}>
+        <div
+          className="vault-balance"
+          onClick={() => setInputValue(stakeBalance.toString())}
+        >
           balance: <b>{stakeBalance}</b> {vaultName}
         </div>
         {hasAllowance ? (
@@ -101,20 +116,33 @@ function Vault({ vaultId }: Props) {
             />
 
             <div className="vault-buttons">
-              <InteractionButtons vaultId={vaultId} inputValue={inputValue} hasTimelock={hasTimelock} />
+              <InteractionButtons
+                vaultId={vaultId}
+                inputValue={inputValue}
+                hasTimelock={hasTimelock}
+              />
             </div>
           </>
         ) : (
-          <div className="vault-button" onClick={() => VaultStore.approve(token, vaultId)}>
+          <div
+            className="vault-button"
+            onClick={() => VaultStore.approve(token, vaultId)}
+          >
             Approve {vaultName} to participate
           </div>
         )}
       </div>
 
-      <div className={`sub-header timelock-container ${hasTimelock && "disabled"}`}>
+      <div
+        className={`sub-header timelock-container ${hasTimelock && "disabled"}`}
+      >
         {!hasTimelock ? (
-          <div className={`vault-button ${amount === 0 && `disabled`}`} onClick={() => amount > 0 && VaultStore.timelock(vaultId)}>
-            ⏱ ENABLE STAKE TIMELOCK (4 WEEKS, 50% bonus) {amount === 0 && "(STAKE TO ENABLE)"}
+          <div
+            className={`vault-button ${amount === 0 && `disabled`}`}
+            onClick={() => amount > 0 && VaultStore.timelock(vaultId)}
+          >
+            ⏱ ENABLE STAKE TIMELOCK (4 WEEKS, 50% bonus){" "}
+            {amount === 0 && "(STAKE TO ENABLE)"}
           </div>
         ) : (
           <div className="vault-button disabled">
@@ -126,26 +154,54 @@ function Vault({ vaultId }: Props) {
       <div className="vault-buttons boost-section">
         {boostTokens.map((token: Token, i: number) =>
           boostTokenAllowances[i] ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }} key={`boost-token-${token.name}-${vaultId}`}>
-              <a href={token.purchaseFrom} target="blank" rel="noopener noreferrer" className="vault-button get-token">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              key={`boost-token-${token.name}-${vaultId}`}
+            >
+              <a
+                href={token.purchaseFrom}
+                target="blank"
+                rel="noopener noreferrer"
+                className="vault-button get-token"
+              >
                 Get
               </a>
-              <div className={`vault-button ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
+              <div
+                className={`vault-button ${currentBoost === i && "selected"}`}
+                onClick={() => setCurrentBoost(i)}
+              >
                 Boost with {token.name}
               </div>
             </div>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column" }} key={`boost-token-${token.name}-${vaultId}`}>
-              <a href={token.purchaseFrom} target="blank" rel="noopener noreferrer" className="vault-button get-token">
+            <div
+              style={{ display: "flex", flexDirection: "column" }}
+              key={`boost-token-${token.name}-${vaultId}`}
+            >
+              <a
+                href={token.purchaseFrom}
+                target="blank"
+                rel="noopener noreferrer"
+                className="vault-button get-token"
+              >
                 Get
               </a>
               {!boostTokenAllowances[i] && (
-                <div className={`vault-button ${currentBoost === i && "selected"}`} onClick={() => setCurrentBoost(i)}>
+                <div
+                  className={`vault-button ${currentBoost === i && "selected"}`}
+                  onClick={() => setCurrentBoost(i)}
+                >
                   Peek
                 </div>
               )}
               <div
-                className={`vault-button boost-button ${currentBoost === i && "selected"}`}
+                className={`vault-button boost-button ${
+                  currentBoost === i && "selected"
+                }`}
                 onClick={() => VaultStore.boostApprove(i, vaultId)}
               >
                 Approve {token.name} for boosting
@@ -159,9 +215,21 @@ function Vault({ vaultId }: Props) {
           const cost = costs[currentBoost][i];
           const bought = cost === 0;
           return (
-            <div className="vault-button vault-boost-button" key={`boost-${p}-${i}`}>
+            <div
+              className="vault-button vault-boost-button"
+              key={`boost-${p}-${i}`}
+            >
               {!bought ? (
-                <div className="boost" onClick={() => VaultStore.purchase(vaultId, currentBoostToken.address, i + 1)}>
+                <div
+                  className="boost"
+                  onClick={() =>
+                    VaultStore.purchase(
+                      vaultId,
+                      currentBoostToken.address,
+                      i + 1
+                    )
+                  }
+                >
                   {p}% boost <br />
                   {costs[currentBoost][i]} {currentBoostToken.name}
                 </div>
@@ -176,14 +244,31 @@ function Vault({ vaultId }: Props) {
   );
 }
 
-const InteractionButtons = ({ inputValue, vaultId, hasTimelock }: { inputValue: string; vaultId: number; hasTimelock: boolean }) => (
+const InteractionButtons = ({
+  inputValue,
+  vaultId,
+  hasTimelock,
+}: {
+  inputValue: string;
+  vaultId: number;
+  hasTimelock: boolean;
+}) => (
   <>
-    <div className="vault-button" onClick={() => parseFloat(inputValue) > 0 && VaultStore.deposit(inputValue, vaultId)}>
+    <div
+      className="vault-button"
+      onClick={() =>
+        parseFloat(inputValue) > 0 && VaultStore.deposit(inputValue, vaultId)
+      }
+    >
       Deposit
     </div>
     <div
       className={`vault-button ${hasTimelock && "disabled"}`}
-      onClick={() => !hasTimelock && parseFloat(inputValue) > 0 && VaultStore.withdraw(inputValue, vaultId)}
+      onClick={() =>
+        !hasTimelock &&
+        parseFloat(inputValue) > 0 &&
+        VaultStore.withdraw(inputValue, vaultId)
+      }
     >
       Withdraw
     </div>

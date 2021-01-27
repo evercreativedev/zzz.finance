@@ -11,8 +11,12 @@ type ContainerProps = {
 
 export const FlexContainer = styled.div<ContainerProps>`
   display: flex;
-  background: ${(props) => (props.view === "Pools" ? "linear-gradient(90deg, #cbcde5 12%, #f8f9f9 50%)" : "#f8f9f9")};
-  flex-direction: ${(props) => (props.type === "horizontal" ? "row" : "column")};
+  background: ${(props) =>
+    props.view === "Pools"
+      ? "linear-gradient(90deg, #cbcde5 12%, #f8f9f9 50%)"
+      : "#f8f9f9"};
+  flex-direction: ${(props) =>
+    props.type === "horizontal" ? "row" : "column"};
   min-height: 100vh;
   @media (max-width: 768px) {
     flex-direction: ${(props) => props.view === "Pools" && "column-reverse"};
@@ -38,13 +42,21 @@ export const ExtraContent = styled.div<ContainerProps>`
   :before {
     height: 10px;
     background-size: 20px 20px;
-    background-image: radial-gradient(circle at 10px -5px, transparent 12px, white 13px);
+    background-image: radial-gradient(
+      circle at 10px -5px,
+      transparent 12px,
+      white 13px
+    );
   }
 
   :after {
     height: 15px;
     background-size: 40px 20px;
-    background-image: radial-gradient(circle at 10px 15px, white 12px, transparent 13px);
+    background-image: radial-gradient(
+      circle at 10px 15px,
+      white 12px,
+      transparent 13px
+    );
   }
 
   @media (max-width: 1024px) {
@@ -57,13 +69,21 @@ export const ExtraLearnContent = styled.div<ContainerProps>`
   :before {
     height: 10px;
     background-size: 20px 20px;
-    background-image: radial-gradient(circle at 10px -5px, transparent 12px, white 13px);
+    background-image: radial-gradient(
+      circle at 10px -5px,
+      transparent 12px,
+      white 13px
+    );
   }
 
   :after {
     height: 15px;
     background-size: 40px 20px;
-    background-image: radial-gradient(circle at 10px 15px, white 12px, transparent 13px);
+    background-image: radial-gradient(
+      circle at 10px 15px,
+      white 12px,
+      transparent 13px
+    );
   }
 `;
 
@@ -75,13 +95,21 @@ export const ExtraGovernanceContent = styled.div<ContainerProps>`
   :before {
     height: 10px;
     background-size: 20px 20px;
-    background-image: radial-gradient(circle at 10px -5px, transparent 12px, white 13px);
+    background-image: radial-gradient(
+      circle at 10px -5px,
+      transparent 12px,
+      white 13px
+    );
   }
 
   :after {
     height: 15px;
     background-size: 40px 20px;
-    background-image: radial-gradient(circle at 10px 15px, white 12px, transparent 13px);
+    background-image: radial-gradient(
+      circle at 10px 15px,
+      white 12px,
+      transparent 13px
+    );
   }
 
   @media (max-width: 1024px) {

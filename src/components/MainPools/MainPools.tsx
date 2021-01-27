@@ -19,7 +19,9 @@ function MainPools() {
   return (
     <Container>
       {selectedCategory === PoolCategory.Retired && (
-        <div className="pool-status-info">These pools are closed / closing. Please exit or withdraw all.</div>
+        <div className="pool-status-info">
+          These pools are closed / closing. Please exit or withdraw all.
+        </div>
       )}
       <CategoryContainer>
         {poolCategories.map(({ category, name }) => (
@@ -34,13 +36,18 @@ function MainPools() {
         ))}
       </CategoryContainer>
       {selectedPools.map((pool) => (
-        <MainPool key={`main-pool-${pool.id}`} pool={pool} currentBlock={currentBlock} />
+        <MainPool
+          key={`main-pool-${pool.id}`}
+          pool={pool}
+          currentBlock={currentBlock}
+        />
       ))}
     </Container>
   );
 }
 
-const isAlive = (poolStatus: PoolStatus) => poolStatus === PoolStatus.Ongoing || poolStatus === PoolStatus.Incoming;
+const isAlive = (poolStatus: PoolStatus) =>
+  poolStatus === PoolStatus.Ongoing || poolStatus === PoolStatus.Incoming;
 
 const filterDeadPools = (selectedCategory: PoolCategory) => (pool: Pool) => {
   const alive = isAlive(pool.poolStatus);

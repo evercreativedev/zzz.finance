@@ -1,5 +1,11 @@
 import Button from "components/Button/Button";
-import { getAllowance, maxStake, maxWithdraw, stake, withdraw } from "eth/methods";
+import {
+  getAllowance,
+  maxStake,
+  maxWithdraw,
+  stake,
+  withdraw,
+} from "eth/methods";
 import React, { memo } from "react";
 import { Pool } from "types";
 import { InputSection } from "./PoolInputSection.styles";
@@ -58,7 +64,11 @@ function PoolInputSection({
                   rounded={false}
                   disabled={!canStake}
                   tooltip={tooltips("stake")}
-                  onClick={() => updater(() => stake(pool, signer, inputValue!, setInputValue))}
+                  onClick={() =>
+                    updater(() =>
+                      stake(pool, signer, inputValue!, setInputValue)
+                    )
+                  }
                 >
                   Stake
                 </Button>
@@ -69,7 +79,9 @@ function PoolInputSection({
                   rounded={false}
                   disabled={!canMaxStake}
                   tooltip={tooltips("max")}
-                  onClick={() => updater(() => maxStake(pool, signer, account, library))}
+                  onClick={() =>
+                    updater(() => maxStake(pool, signer, account, library))
+                  }
                 >
                   Max stake
                 </Button>
@@ -79,11 +91,24 @@ function PoolInputSection({
                 rounded={false}
                 disabled={!canWithdraw}
                 tooltip={tooltips("withdraw")}
-                onClick={() => updater(() => withdraw(pool, signer, inputValue!, setInputValue))}
+                onClick={() =>
+                  updater(() =>
+                    withdraw(pool, signer, inputValue!, setInputValue)
+                  )
+                }
               >
                 Withdraw{" "}
                 {(pool.id === "419" || pool.id === "458") && (
-                  <div style={{ marginLeft: "2px", fontWeight: "normal", fontSize: "10px", color: "#ffffff" }}>(1% tax)</div>
+                  <div
+                    style={{
+                      marginLeft: "2px",
+                      fontWeight: "normal",
+                      fontSize: "10px",
+                      color: "#ffffff",
+                    }}
+                  >
+                    (1% tax)
+                  </div>
                 )}
               </Button>
               <Button
@@ -91,7 +116,9 @@ function PoolInputSection({
                 rounded={false}
                 disabled={!canMaxWithdraw}
                 tooltip={tooltips("withdrawall")}
-                onClick={() => updater(() => maxWithdraw(pool, signer, library, account))}
+                onClick={() =>
+                  updater(() => maxWithdraw(pool, signer, library, account))
+                }
               >
                 Max withdraw
               </Button>
@@ -102,7 +129,9 @@ function PoolInputSection({
               rounded={false}
               disabled={!canMaxWithdraw}
               tooltip={tooltips("withdrawall")}
-              onClick={() => updater(() => maxWithdraw(pool, signer, library, account))}
+              onClick={() =>
+                updater(() => maxWithdraw(pool, signer, library, account))
+              }
               style={{ gridColumn: "1 / 3" }}
             >
               Withdraw all
@@ -115,7 +144,10 @@ function PoolInputSection({
     if (pool.id !== "247" && pool.id !== "248") {
       return (
         <InputSection>
-          <Button color="#60db97" onClick={() => updater(() => getAllowance(pool, signer))}>
+          <Button
+            color="#60db97"
+            onClick={() => updater(() => getAllowance(pool, signer))}
+          >
             Approve {pool.token.name} before you can stake!
           </Button>
         </InputSection>
@@ -124,7 +156,9 @@ function PoolInputSection({
   }
   return (
     <InputSection>
-      <Button color="#60db97">No new stakers for this pool. Read the message above.</Button>
+      <Button color="#60db97">
+        No new stakers for this pool. Read the message above.
+      </Button>
     </InputSection>
   );
 }

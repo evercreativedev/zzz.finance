@@ -32,7 +32,8 @@ class Prices {
     autorun(this.syncToStorage);
   }
 
-  canFetch = () => !this.lastTimeFetched || this.lastTimeFetched + 30000 < Date.now();
+  canFetch = () =>
+    !this.lastTimeFetched || this.lastTimeFetched + 30000 < Date.now();
 
   syncToStorage = () => {
     localStorage.setItem("zzz-prices", JSON.stringify(this.prices));
@@ -68,7 +69,11 @@ class Prices {
 
       // Make the query
       const coinGeckoQuery = addresses.map((token) => `${token[1]},`).join();
-      const result: any[] = await coingecko.getPricingFor(coinGeckoQuery, "USD", true);
+      const result: any[] = await coingecko.getPricingFor(
+        coinGeckoQuery,
+        "USD",
+        true
+      );
       for (const [key, value] of Object.entries(result)) {
         addresses.forEach((token) => {
           const tokenName = token[0];
@@ -79,7 +84,12 @@ class Prices {
         });
       }
 
-      const NAPPrice = await getPriceAgainst(tokens.NAPV2, tokens.ZZZV2, tokens.ZZZNAPV2, provider);
+      const NAPPrice = await getPriceAgainst(
+        tokens.NAPV2,
+        tokens.ZZZV2,
+        tokens.ZZZNAPV2,
+        provider
+      );
       runInAction(() => this.prices.set("NAPV2", NAPPrice));
 
       const uniPricePromises = pools
@@ -92,10 +102,18 @@ class Prices {
 
       await Promise.all(uniPricePromises);
 
-      const dreamPrice = await getPriceAgainst(tokens.DREAM, tokens.WETH, tokens.DREAMETH, provider);
+      const dreamPrice = await getPriceAgainst(
+        tokens.DREAM,
+        tokens.WETH,
+        tokens.DREAMETH,
+        provider
+      );
       runInAction(() => this.prices.set("DREAM", dreamPrice));
       this.lastTimeFetched = Date.now();
-      localStorage.setItem("zzz-prices-fetched", JSON.stringify(this.lastTimeFetched));
+      localStorage.setItem(
+        "zzz-prices-fetched",
+        JSON.stringify(this.lastTimeFetched)
+      );
     } else {
       console.log("Price cache hit");
     }

@@ -66,7 +66,12 @@ function Listings() {
         </a>
       </div>
       <h1 style={{ gridColumn: "1/3", justifySelf: "center" }}>Find us on</h1>
-      <a className="listing" href="https://www.coingecko.com/en/coins/zzz-finance-v2" target="blank" rel="noopener noreferrer">
+      <a
+        className="listing"
+        href="https://www.coingecko.com/en/coins/zzz-finance-v2"
+        target="blank"
+        rel="noopener noreferrer"
+      >
         Coingecko
         <img
           className="coingecko-image"
@@ -79,7 +84,11 @@ function Listings() {
           }}
         />
       </a>
-      <a className="listing" href="https://coinmarketcap.com/currencies/zzz-finance-v2/" style={{ gridColumn: "1 / 3" }}>
+      <a
+        className="listing"
+        href="https://coinmarketcap.com/currencies/zzz-finance-v2/"
+        style={{ gridColumn: "1 / 3" }}
+      >
         Coinmarketcap
         <img
           className="coinmarket-image"

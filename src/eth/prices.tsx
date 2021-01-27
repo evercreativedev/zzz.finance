@@ -12,7 +12,12 @@ import { runInAction } from "mobx";
  * @param uniToken the uni LP token
  * @param pairToken ther pair token in the UNI we can search a price for, for example ZZZNAP it would be ZZZ.
  */
-export async function getPriceFor(token: Token, provider: any, uniToken: Token, pairToken: Token) {
+export async function getPriceFor(
+  token: Token,
+  provider: any,
+  uniToken: Token,
+  pairToken: Token
+) {
   const price = PriceStore.prices.get(token.name);
   if (!PriceStore.canFetch() && price) {
     return price;
@@ -33,12 +38,22 @@ export async function getPriceFor(token: Token, provider: any, uniToken: Token, 
 
   const STAKING_TOKEN = new ethers.Contract(token.address, token.abi, provider);
 
-  const PAIR_TOKEN = new ethers.Contract(pairToken.address, pairToken.abi, provider);
+  const PAIR_TOKEN = new ethers.Contract(
+    pairToken.address,
+    pairToken.abi,
+    provider
+  );
 
   // Get amount of primary token in pair
-  const PAIRBALANCE = formatResult(await PAIR_TOKEN.balanceOf(uniToken.address), token.decimals);
+  const PAIRBALANCE = formatResult(
+    await PAIR_TOKEN.balanceOf(uniToken.address),
+    token.decimals
+  );
   //Get number of secondary token in pair
-  const TOKENBALANCE = formatResult(await STAKING_TOKEN.balanceOf(uniToken.address), token.decimals);
+  const TOKENBALANCE = formatResult(
+    await STAKING_TOKEN.balanceOf(uniToken.address),
+    token.decimals
+  );
 
   // Price of the opposite pair
   const PAIRPRICE = await coingecko.getPricingFor(pairToken.address, "USD");
@@ -56,19 +71,38 @@ export async function getUNIPrice(pool: Pool, provider: any) {
   }
   if (pool.poolType === PoolType.LP && pool.uniPairToken) {
     /* MAIN */
-    const UNI_POOL = new ethers.Contract(pool.token.address, pool.token.abi, provider);
+    const UNI_POOL = new ethers.Contract(
+      pool.token.address,
+      pool.token.abi,
+      provider
+    );
 
-    const UNI_PAIR_TOKEN = new ethers.Contract(pool.uniPairToken.address, pool.uniPairToken.abi, provider);
+    const UNI_PAIR_TOKEN = new ethers.Contract(
+      pool.uniPairToken.address,
+      pool.uniPairToken.abi,
+      provider
+    );
 
-    const TOTAL_PAIR_IN_UNI_POOL = formatResult(await UNI_PAIR_TOKEN.balanceOf(pool.token.address), pool.uniPairToken.decimals);
+    const TOTAL_PAIR_IN_UNI_POOL = formatResult(
+      await UNI_PAIR_TOKEN.balanceOf(pool.token.address),
+      pool.uniPairToken.decimals
+    );
 
-    const TOTAL_PAIR_SUPPLY = formatResult(await UNI_POOL.totalSupply(), pool.token.decimals);
+    const TOTAL_PAIR_SUPPLY = formatResult(
+      await UNI_POOL.totalSupply(),
+      pool.token.decimals
+    );
 
     let UNI_PAIR_PRICE = PriceStore.prices.get(pool.uniPairToken.name);
     if (!UNI_PAIR_PRICE) {
       // Make  a query if not
-      const results = await coingecko.getPricingFor(pool.uniPairToken.address, "USD");
-      runInAction(() => PriceStore.prices.set(pool.uniPairToken!.name, results.usd));
+      const results = await coingecko.getPricingFor(
+        pool.uniPairToken.address,
+        "USD"
+      );
+      runInAction(() =>
+        PriceStore.prices.set(pool.uniPairToken!.name, results.usd)
+      );
       UNI_PAIR_PRICE = results.usd;
     }
 
@@ -79,18 +113,37 @@ export async function getUNIPrice(pool: Pool, provider: any) {
   }
 
   if (pool.poolType === PoolType.SingleTokenLPOutput && pool.uniPairToken) {
-    const UNI_POOL = new ethers.Contract(pool.reward.address, pool.reward.abi, provider);
+    const UNI_POOL = new ethers.Contract(
+      pool.reward.address,
+      pool.reward.abi,
+      provider
+    );
 
-    const UNI_PAIR_TOKEN = new ethers.Contract(pool.uniPairToken.address, pool.uniPairToken.abi, provider);
+    const UNI_PAIR_TOKEN = new ethers.Contract(
+      pool.uniPairToken.address,
+      pool.uniPairToken.abi,
+      provider
+    );
 
-    const TOTAL_PAIR_IN_UNI_POOL = formatResult(await UNI_PAIR_TOKEN.balanceOf(pool.reward.address), pool.uniPairToken.decimals);
+    const TOTAL_PAIR_IN_UNI_POOL = formatResult(
+      await UNI_PAIR_TOKEN.balanceOf(pool.reward.address),
+      pool.uniPairToken.decimals
+    );
 
-    const TOTAL_PAIR_SUPPLY = formatResult(await UNI_POOL.totalSupply(), pool.reward.decimals);
+    const TOTAL_PAIR_SUPPLY = formatResult(
+      await UNI_POOL.totalSupply(),
+      pool.reward.decimals
+    );
     let UNI_PAIR_PRICE = PriceStore.prices.get(pool.uniPairToken.name);
     if (!UNI_PAIR_PRICE) {
       // Make  a query if not
-      const results = await coingecko.getPricingFor(pool.uniPairToken.address, "USD");
-      runInAction(() => PriceStore.prices.set(pool.uniPairToken!.name, results.usd));
+      const results = await coingecko.getPricingFor(
+        pool.uniPairToken.address,
+        "USD"
+      );
+      runInAction(() =>
+        PriceStore.prices.set(pool.uniPairToken!.name, results.usd)
+      );
       UNI_PAIR_PRICE = results.usd;
     }
 
@@ -105,14 +158,24 @@ export async function getUNIPrice(pool: Pool, provider: any) {
 
 // Get DREAM price
 export async function getDREAMPrice(provider: any) {
-  const WETH_TOKEN = new ethers.Contract(tokens.WETH.address, tokens.WETH.abi, provider);
+  const WETH_TOKEN = new ethers.Contract(
+    tokens.WETH.address,
+    tokens.WETH.abi,
+    provider
+  );
 
-  const DREAM_TOKEN = new ethers.Contract(tokens.DREAM.address, tokens.DREAM.abi, provider);
+  const DREAM_TOKEN = new ethers.Contract(
+    tokens.DREAM.address,
+    tokens.DREAM.abi,
+    provider
+  );
 
   // Get amount of ZZZ in ZZZ/NAP uni pool. The UNI token itself holds the number of zzz
-  const WETHBALANCE = (await WETH_TOKEN.balanceOf(tokens.DREAMETH.address)) / 1e18;
+  const WETHBALANCE =
+    (await WETH_TOKEN.balanceOf(tokens.DREAMETH.address)) / 1e18;
   // Get DREAM BALANCE
-  const DREAMBALANCE = (await DREAM_TOKEN.balanceOf(tokens.DREAMETH.address)) / 1e18;
+  const DREAMBALANCE =
+    (await DREAM_TOKEN.balanceOf(tokens.DREAMETH.address)) / 1e18;
   const WETHPrice = await coingecko.getPricingFor(WETH_TOKEN.address, "USD");
   const DREAMPrice = (WETHBALANCE * WETHPrice.usd) / DREAMBALANCE;
 
@@ -121,14 +184,24 @@ export async function getDREAMPrice(provider: any) {
 
 // Get DREAM price
 export async function getCORDPrice(provider: any) {
-  const WETH_TOKEN = new ethers.Contract(tokens.WETH.address, tokens.WETH.abi, provider);
+  const WETH_TOKEN = new ethers.Contract(
+    tokens.WETH.address,
+    tokens.WETH.abi,
+    provider
+  );
 
-  const CORD_TOKEN = new ethers.Contract(tokens.CORD.address, tokens.CORD.abi, provider);
+  const CORD_TOKEN = new ethers.Contract(
+    tokens.CORD.address,
+    tokens.CORD.abi,
+    provider
+  );
 
   // Get amount of ZZZ in ZZZ/NAP uni pool. The UNI token itself holds the number of zzz
-  const WETHBALANCE = (await WETH_TOKEN.balanceOf(tokens.CORDETH.address)) / 1e18;
+  const WETHBALANCE =
+    (await WETH_TOKEN.balanceOf(tokens.CORDETH.address)) / 1e18;
   // Get DREAM BALANCE
-  const CORDBALANCE = (await CORD_TOKEN.balanceOf(tokens.CORDETH.address)) / 1e18;
+  const CORDBALANCE =
+    (await CORD_TOKEN.balanceOf(tokens.CORDETH.address)) / 1e18;
   const WETHPrice = await coingecko.getPricingFor(WETH_TOKEN.address, "USD");
   const CORDPrice = (WETHBALANCE * WETHPrice.usd) / CORDBALANCE;
 
@@ -137,14 +210,24 @@ export async function getCORDPrice(provider: any) {
 
 // Get NAP price
 export async function getNAPPrice(provider: any) {
-  const ZZZ_TOKEN = new ethers.Contract(tokens.ZZZ.address, tokens.ZZZ.abi, provider);
+  const ZZZ_TOKEN = new ethers.Contract(
+    tokens.ZZZ.address,
+    tokens.ZZZ.abi,
+    provider
+  );
 
-  const NAP_TOKEN = new ethers.Contract(tokens.NAP.address, tokens.NAP.abi, provider);
+  const NAP_TOKEN = new ethers.Contract(
+    tokens.NAP.address,
+    tokens.NAP.abi,
+    provider
+  );
 
   // Get amount of ZZZ in ZZZ/NAP uni pool. The UNI token itself holds the number of zzz
-  const zzzBalance = (await ZZZ_TOKEN.balanceOf(tokens.ZZZNAPUNI.address)) / 1e18;
+  const zzzBalance =
+    (await ZZZ_TOKEN.balanceOf(tokens.ZZZNAPUNI.address)) / 1e18;
   // Get number of NAP
-  const napBalance = (await NAP_TOKEN.balanceOf(tokens.ZZZNAPUNI.address)) / 1e18;
+  const napBalance =
+    (await NAP_TOKEN.balanceOf(tokens.ZZZNAPUNI.address)) / 1e18;
   // Price of zzz
   const ZZZPrice = await coingecko.getPricingFor(ZZZ_TOKEN.address, "USD");
   const NAPPrice = (zzzBalance * ZZZPrice.usd) / napBalance;
@@ -152,7 +235,12 @@ export async function getNAPPrice(provider: any) {
 }
 
 // Get price against token
-export async function getPriceAgainst(token: Token, againstToken: Token, uniToken: Token, provider: any) {
+export async function getPriceAgainst(
+  token: Token,
+  againstToken: Token,
+  uniToken: Token,
+  provider: any
+) {
   const price = PriceStore.prices.get(token.name);
   if (!PriceStore.canFetch() && price) return price;
   if (!provider) return 0;
@@ -161,13 +249,24 @@ export async function getPriceAgainst(token: Token, againstToken: Token, uniToke
     againstToken = tokens.WETH;
   }
   // Initialize contract for the against token
-  const AGAINST_TOKEN = new ethers.Contract(againstToken.address, againstToken.abi, provider);
+  const AGAINST_TOKEN = new ethers.Contract(
+    againstToken.address,
+    againstToken.abi,
+    provider
+  );
 
   // Initialize contract for the target token
-  const TOKEN_TO_GET_PRICE_FOR = new ethers.Contract(token.address, token.abi, provider);
+  const TOKEN_TO_GET_PRICE_FOR = new ethers.Contract(
+    token.address,
+    token.abi,
+    provider
+  );
 
   // Get amount of against token in pool. The UNI token itself holds the number.
-  const AGAINST_TOKEN_BALANCE = formatResult(await AGAINST_TOKEN.balanceOf(uniToken.address), uniToken.decimals);
+  const AGAINST_TOKEN_BALANCE = formatResult(
+    await AGAINST_TOKEN.balanceOf(uniToken.address),
+    uniToken.decimals
+  );
 
   // Get target token balance. The UNI token itself holds the number.
   const TOKEN_TO_GET_PRICE_FOR_BALANCE = formatResult(
@@ -183,7 +282,9 @@ export async function getPriceAgainst(token: Token, againstToken: Token, uniToke
   }
 
   // Get the target price.
-  const TARGETPRICE = (AGAINST_TOKEN_BALANCE * AGAINST_TOKEN_PRICE!) / TOKEN_TO_GET_PRICE_FOR_BALANCE;
+  const TARGETPRICE =
+    (AGAINST_TOKEN_BALANCE * AGAINST_TOKEN_PRICE!) /
+    TOKEN_TO_GET_PRICE_FOR_BALANCE;
 
   runInAction(() => PriceStore.prices.set(token.name, TARGETPRICE));
 

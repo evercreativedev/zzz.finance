@@ -26,11 +26,22 @@ function Learn() {
             {boxes.map((box) => (
               <InfoBox color={box.color}>
                 <div className="title">{box.title}</div>
-                {box.image && <img src={box.image} className={box.id} alt="crypto university" />}
+                {box.image && (
+                  <img
+                    src={box.image}
+                    className={box.id}
+                    alt="crypto university"
+                  />
+                )}
                 <div className="explanation">
                   <div className="explanation-content">
                     {box.text}
-                    <a className="button" href={box.link} target="_blank" rel="noopener noreferrer">
+                    <a
+                      className="button"
+                      href={box.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {box.linkText ? box.linkText : "Watch"}
                     </a>
                   </div>

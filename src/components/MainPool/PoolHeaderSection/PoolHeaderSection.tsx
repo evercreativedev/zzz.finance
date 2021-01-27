@@ -17,15 +17,29 @@ type Props = {
 
 Modal.setAppElement("#root");
 
-function PoolHeaderSection({ pool, userStaked, totalStaked, userPercentageOfTotal, tooltipBoost, multiplier }: Props) {
+function PoolHeaderSection({
+  pool,
+  userStaked,
+  totalStaked,
+  userPercentageOfTotal,
+  tooltipBoost,
+  multiplier,
+}: Props) {
   const [poolInfoModalOpen, setIsPoolInfoModalOpen] = useState(false);
   const [migrationModalOpen, setMigrationModalOpen] = useState(false);
-  const [effectiveStakeModalOpen, setIsEffectiveStakeModalOpen] = useState(false);
+  const [effectiveStakeModalOpen, setIsEffectiveStakeModalOpen] = useState(
+    false
+  );
   const { token, partnerName, poolIcon, category, purchaseFrom } = pool;
   const effectiveStake = userStaked * multiplier - userStaked;
   return (
     <Header>
-      <a className="header-text buy-button" href={purchaseFrom} target="_blank" rel="noopener noreferrer">
+      <a
+        className="header-text buy-button"
+        href={purchaseFrom}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Get {token.name}
       </a>
       {category === PoolCategory.Partners && (
@@ -56,8 +70,12 @@ function PoolHeaderSection({ pool, userStaked, totalStaked, userPercentageOfTota
         </div>
       )}
       <div className="header-text">
-        staked {userStaked ? userStaked.toFixed(5) : 0} / {totalStaked.toFixed(2)} {token.name}
-        {pool.isMigrationPool && "V2"} {userPercentageOfTotal ? `(${userPercentageOfTotal.toFixed(2)}%)` : "(0%)"}
+        staked {userStaked ? userStaked.toFixed(5) : 0} /{" "}
+        {totalStaked.toFixed(2)} {token.name}
+        {pool.isMigrationPool && "V2"}{" "}
+        {userPercentageOfTotal
+          ? `(${userPercentageOfTotal.toFixed(2)}%)`
+          : "(0%)"}
       </div>
       {!pool.hasEffectiveStake && !pool.isMigrationPool ? (
         <div className="header-text" data-tip={tooltipBoost}>
@@ -76,7 +94,9 @@ function PoolHeaderSection({ pool, userStaked, totalStaked, userPercentageOfTota
         contentLabel="Pool Info"
         style={PartnerModalStyles}
       >
-        {partnerName && <PoolInfo partnerName={partnerName} poolIcon={poolIcon} />}
+        {partnerName && (
+          <PoolInfo partnerName={partnerName} poolIcon={poolIcon} />
+        )}
       </Modal>
       <Modal
         isOpen={effectiveStakeModalOpen}

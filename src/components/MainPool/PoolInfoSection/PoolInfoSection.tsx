@@ -12,8 +12,15 @@ function PoolInfoSection({ pool, userTokenAmount }: Props) {
   const { poolStatus, name, poolIconType, poolIcon, info, token } = pool;
   return (
     <InfoSection>
-      {!isBugged(pool) && poolStatus === PoolStatus.Ongoing && <Timer pool={pool} />}
-      <a href={`https://etherscan.io/address/${pool.address}`} target="_blank" rel="noopener noreferrer" className="pool-name">
+      {!isBugged(pool) && poolStatus === PoolStatus.Ongoing && (
+        <Timer pool={pool} />
+      )}
+      <a
+        href={`https://etherscan.io/address/${pool.address}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="pool-name"
+      >
         {name}
       </a>
       {poolIconType ? (

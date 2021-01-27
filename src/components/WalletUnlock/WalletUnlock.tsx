@@ -3,7 +3,10 @@ import React, { useEffect } from "react";
 import metamaskicon from "assets/metamask_icon.svg";
 import phone from "assets/phone.png";
 import { injected, walletconnect } from "eth/connectors";
-import { WalletUnlockButton, WalletUnlockContainer } from "./WalletUnlock.styles";
+import {
+  WalletUnlockButton,
+  WalletUnlockContainer,
+} from "./WalletUnlock.styles";
 
 enum ConnectorNames {
   Injected = "Injected",
@@ -54,7 +57,13 @@ function WalletUnlock() {
             >
               <div className="connector">
                 <div className="connector-title">{connectorUi[name].title}</div>
-                <img className="connector-icon" src={connectorUi[name].icon} width="30" aria-label="wallet-unlock" alt="wallet-unlock" />
+                <img
+                  className="connector-icon"
+                  src={connectorUi[name].icon}
+                  width="30"
+                  aria-label="wallet-unlock"
+                  alt="wallet-unlock"
+                />
               </div>
             </WalletUnlockButton>
           );

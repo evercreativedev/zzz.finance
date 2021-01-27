@@ -26,13 +26,26 @@ const ReadmeStyles = {
 function VaultGlobal() {
   const [showReadme, setShowReadme] = useState(false);
   const { currentBlock } = EthStore;
-  const { epoch, epochStartBlock, NAPb, ZZZb, ZZZlastEpoch, NAPlastEpoch, NAPcurrentEpoch, ZZZcurrentEpoch } = VaultStore;
+  const {
+    epoch,
+    epochStartBlock,
+    NAPb,
+    ZZZb,
+    ZZZlastEpoch,
+    NAPlastEpoch,
+    NAPcurrentEpoch,
+    ZZZcurrentEpoch,
+  } = VaultStore;
 
   const canStartNewEpoch = epochStartBlock + 200000 - currentBlock <= 0;
   return (
     <div className="vault-global">
       <h1>
-        <a href={`https://etherscan.io/address/${vaultContracts.homestead.vault.address}`} target="blank" rel="noopener noreferrer">
+        <a
+          href={`https://etherscan.io/address/${vaultContracts.homestead.vault.address}`}
+          target="blank"
+          rel="noopener noreferrer"
+        >
           ZZZ VAULTS
         </a>
       </h1>
@@ -43,12 +56,21 @@ function VaultGlobal() {
         </span>
       </div>
       <div className="epoch">
-        CURRENT EPOCH: {epoch} - next in {epochStartBlock + 200000 - currentBlock} blocks
+        CURRENT EPOCH: {epoch} - next in{" "}
+        {epochStartBlock + 200000 - currentBlock} blocks
       </div>
-      <div className={`vault-button ${!canStartNewEpoch && "disabled"}`} onClick={() => canStartNewEpoch && VaultStore.newEpoch()}>
+      <div
+        className={`vault-button ${!canStartNewEpoch && "disabled"}`}
+        onClick={() => canStartNewEpoch && VaultStore.newEpoch()}
+      >
         Start a new epoch
       </div>
-      <Modal isOpen={showReadme} onRequestClose={() => setShowReadme(false)} contentLabel="Vault Info" style={ReadmeStyles}>
+      <Modal
+        isOpen={showReadme}
+        onRequestClose={() => setShowReadme(false)}
+        contentLabel="Vault Info"
+        style={ReadmeStyles}
+      >
         <VaultReadme />
       </Modal>
       <div className="sub-header" style={{ textAlign: "center" }}>
@@ -56,7 +78,8 @@ function VaultGlobal() {
           ZZZ avg per block: <b>{ZZZb} ZZZ</b>
         </div>
         <div className="zzz-rewards">
-          last epoch total: <b>{ZZZlastEpoch} ZZZ</b> - current: <b>{ZZZcurrentEpoch} ZZZ</b>
+          last epoch total: <b>{ZZZlastEpoch} ZZZ</b> - current:{" "}
+          <b>{ZZZcurrentEpoch} ZZZ</b>
         </div>
         <br />
         <br />
@@ -64,7 +87,8 @@ function VaultGlobal() {
           NAP avg per block: <b>{NAPb} NAP</b>
         </div>
         <div className="zzz-rewards">
-          last epoch total: <b>{NAPlastEpoch} NAP</b> - current: <b>{NAPcurrentEpoch} NAP</b>
+          last epoch total: <b>{NAPlastEpoch} NAP</b> - current:{" "}
+          <b>{NAPcurrentEpoch} NAP</b>
         </div>
       </div>
     </div>
