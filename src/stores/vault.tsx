@@ -170,6 +170,7 @@ class VaultStore {
 
   // Calculate global, pool or individuals yields
   @action async calculateAPY(vaultId: number) {
+    // ((0.006 / (295 / 75)) * 6524 * 352) / 5878;
     const vaultData = this.vaultData.get(vaultId.toString());
     if (!vaultData) return 0;
 
@@ -182,20 +183,20 @@ class VaultStore {
     if (vaultId === 3) STAKEPRICE = PriceStore.prices.get("NAPV2");
 
     const blockPerYear = 2407905;
+    console.log(
+      vaultData.totalStaked * STAKEPRICE,
+      STAKEPRICE,
+      vaultId.toString()
+    );
     if (ZZZPRICE && NAPPRICE && STAKEPRICE && vaultData) {
-      const totalStaked = STAKEPRICE! * vaultData.totalStaked;
-      let ZZZYield =
-        (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE!) / totalStaked;
-      let NAPYield =
-        (vaultData.NAPPerBlock * blockPerYear * NAPPRICE!) / totalStaked;
-      console.log(
-        vaultId,
-        totalStaked,
-        ZZZYield,
-        NAPYield,
-        vaultData.ZZZPerBlock,
-        vaultData.NAPPerBlock
-      );
+      let ZZZ =
+        (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE) /
+        (vaultData.totalStaked * STAKEPRICE);
+      let NAP =
+        (vaultData.NAPPerBlock * blockPerYear * NAPPRICE) /
+        (vaultData.totalStaked * STAKEPRICE);
+      let ZZZYield = ZZZ * 100;
+      let NAPYield = NAP * 100;
       return ZZZYield + NAPYield;
     } else {
       return 0;
