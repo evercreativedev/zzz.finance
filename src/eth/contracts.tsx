@@ -2,16 +2,9 @@ import CordIcon from "../assets/cord.png";
 import sslIcon from "../assets/ssl_logo.png";
 import level2Icon from "../assets/level_2.svg";
 import catSmallIcon from "../assets/cat_smaller.png";
+import EthStore from "stores/eth";
 
-import {
-  Pool,
-  Token,
-  PoolStatus,
-  PoolType,
-  PoolCategory,
-  BoostLevel,
-  PoolIconType,
-} from "../types";
+import { Pool, Token, PoolStatus, PoolType, PoolCategory, BoostLevel, PoolIconType } from "../types";
 
 const boostLevels: { [key: string]: BoostLevel[] } = {
   normal: [
@@ -35,6 +28,12 @@ const boostLevels: { [key: string]: BoostLevel[] } = {
     { level: 5, percentage: "30%" },
     { level: 6, percentage: "40%" },
   ],
+  v4: [
+    { level: 1, percentage: "5%" },
+    { level: 2, percentage: "10%" },
+    { level: 3, percentage: "15%" },
+    { level: 4, percentage: "25%" },
+  ],
 };
 
 // Mainnet tokens
@@ -56,8 +55,7 @@ export const tokens: { [tokenName: string]: Token } = {
     address: "0xBc35D7753f0Db8Fb9c788b7d7d284cDd78A4EdE3",
     abi: require("./abi/napv2.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
+    purchaseFrom: "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
   },
   BPT: {
     name: "BPT",
@@ -74,7 +72,6 @@ export const tokens: { [tokenName: string]: Token } = {
   },
   ZZZNAP: {
     name: "ZZZNAPLP",
-    // Change this
     address: "0x0DE0322D3ac0d5002e2bc9c3a188728728D90799",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
@@ -82,7 +79,6 @@ export const tokens: { [tokenName: string]: Token } = {
   },
   ZZZNAPV2: {
     name: "ZZZNAPLPV2",
-    // Change this
     address: "0x5c599e277c981d796dbf94c6e79ddac610d6052b",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
@@ -90,7 +86,6 @@ export const tokens: { [tokenName: string]: Token } = {
   },
   ZZZETHV2: {
     name: "ZZZETHLPV2",
-    // Change this
     address: "0x4b29ed4190d8387755510feee729fbc974152a0c",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
@@ -108,8 +103,7 @@ export const tokens: { [tokenName: string]: Token } = {
     address: "0xa93D5Cfaa41193b13321c035b4bDD2B534172762",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x19b3de48392778f8e6ef332fee002aa5e15fe41a",
+    purchaseFrom: "https://info.uniswap.org/pair/0x19b3de48392778f8e6ef332fee002aa5e15fe41a",
   },
   WETH: {
     name: "WETH",
@@ -122,8 +116,7 @@ export const tokens: { [tokenName: string]: Token } = {
     address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+    purchaseFrom: "https://info.uniswap.org/pair/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
   },
   NAP: {
     name: "NAP",
@@ -131,12 +124,12 @@ export const tokens: { [tokenName: string]: Token } = {
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
   },
-  // NAPV2: {
-  //   name: "NAPV2",
-  //   address: "",
-  //   abi: require("./abi/erc20_abi.json"),
-  //   decimals: 18,
-  // },
+  NAPETH: {
+    name: "NAP/ETH",
+    address: "0xabca101b4a5404cfa49544e475d211e65619c9c7",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+  },
   COVAL: {
     name: "COVAL",
     address: "0x3d658390460295fb963f54dc0899cfb1c30776df",
@@ -220,13 +213,88 @@ export const tokens: { [tokenName: string]: Token } = {
     address: "0x73ee6d7e6b203125add89320e9f343d65ec7c39a",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x0f3ce875cd56870ec7915e0fa247a202685888c5",
+    purchaseFrom: "https://info.uniswap.org/pair/0x0f3ce875cd56870ec7915e0fa247a202685888c5",
+  },
+  RFI: {
+    name: "RFI",
+    address: "0xA1AFFfE3F4D611d252010E3EAf6f4D77088b0cd7",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 9,
+    purchaseFrom: "https://info.uniswap.org/pair/0x0f3ce875cd56870ec7915e0fa247a202685888c5",
   },
 };
 
 // Mainnet pools
 export const pools: Pool[] = [
+  {
+    id: "10212",
+    name: "ZZZ/ETH",
+    address: "0xbE3e2d76000A66B10634F3020e676794F9E4eF1E",
+    token: tokens.ZZZETHV2,
+    reward: tokens.ZZZV2,
+    poolIcon: "🐔",
+    abi: require("./abi/poolv3.json"),
+    info: "Stake ZZZ/ETH LP for ZZZ",
+    purchaseFrom: "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
+    poolStatus: PoolStatus.Ongoing,
+    poolType: PoolType.LP,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: tokens.ZZZETHV2,
+    uniPairToken: tokens.WETH,
+    uniToken: tokens.ZZZETHV2,
+    usesNewAbi: true,
+    category: PoolCategory.ZZZ,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [tokens.DREAM, tokens.NAPV2, tokens.DAI, tokens.RFI],
+    startTime: 1612156430,
+  },
+  {
+    id: "10213",
+    name: "ZZZ/NAP",
+    address: "0xD2a3eae9d7cc2884ded7631cEe83727f17447577",
+    token: tokens.ZZZNAPV2,
+    reward: tokens.DREAM,
+    poolIcon: "🐔",
+    abi: require("./abi/poolv3.json"),
+    info: "Stake ZZZ/NAP LP for DREAM",
+    purchaseFrom: "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
+    poolStatus: PoolStatus.Ongoing,
+    poolType: PoolType.LP,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: tokens.DREAMETH,
+    uniPairToken: tokens.WETH,
+    uniToken: tokens.ZZZETHV2,
+    usesNewAbi: true,
+    category: PoolCategory.ZZZ,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [tokens.DREAM, tokens.NAPV2, tokens.DAI, tokens.RFI],
+    startTime: 1612156430,
+  },
+  {
+    id: "10215",
+    name: "NAP/ETH",
+    address: "0xd8eEf807F6ec7514f36663388850F950b37a5ea2",
+    token: tokens.NAPETH,
+    reward: tokens.NAP,
+    poolIcon: "🐔",
+    abi: require("./abi/poolv3.json"),
+    info: "Stake NAP/ETH LP for NAP",
+    purchaseFrom: "https://info.uniswap.org/pair/0xabca101b4a5404cfa49544e475d211e65619c9c7",
+    poolStatus: PoolStatus.Ongoing,
+    poolType: PoolType.LP,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: tokens.NAPETH,
+    uniPairToken: tokens.WETH,
+    uniToken: tokens.NAPETH,
+    usesNewAbi: true,
+    category: PoolCategory.ZZZ,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [tokens.DREAM, tokens.NAPV2, tokens.DAI, tokens.RFI],
+    startTime: 1612156430,
+  },
   {
     id: "10210",
     name: "ZZZV2",
@@ -237,14 +305,13 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/migration_pool.json"),
     info: "Migrate ZZZ to V2 and earn NAPV2.",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
+    purchaseFrom: "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
     poolStatus: PoolStatus.Ongoing,
     poolType: PoolType.SingleToken,
     rewardTokenPair: tokens.ZZZV2,
     uniPairToken: tokens.WETH,
     uniToken: tokens.ZZZETHV2,
-    category: PoolCategory.ZZZ,
+    category: PoolCategory.Migration,
     isMigrationPool: true,
   },
   {
@@ -257,14 +324,13 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/migration_pool.json"),
     info: "Migrate NAP to V2 and earn NAP V2.",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
+    purchaseFrom: "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
     poolStatus: PoolStatus.Ongoing,
     poolType: PoolType.SingleToken,
     rewardTokenPair: tokens.ZZZV2,
     uniPairToken: tokens.ZZZV2,
     uniToken: tokens.ZZZNAPV2,
-    category: PoolCategory.ZZZ,
+    category: PoolCategory.Migration,
     isMigrationPool: true,
   },
   {
@@ -277,14 +343,13 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/migration_pool.json"),
     info: "Migrate ZZZETH to V2 and earn NAPV2",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
+    purchaseFrom: "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
     poolStatus: PoolStatus.Ongoing,
     poolType: PoolType.LP,
     rewardTokenPair: tokens.ZZZV2,
     uniPairToken: tokens.WETH,
     uniToken: tokens.ZZZETHV2,
-    category: PoolCategory.ZZZ,
+    category: PoolCategory.Migration,
     isMigrationPool: true,
   },
   {
@@ -297,14 +362,13 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/migration_pool.json"),
     info: "Migrate ZZZNAP to V2 and earn NAPV2",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
+    purchaseFrom: "https://info.uniswap.org/pair/0x5c599e277c981d796dbf94c6e79ddac610d6052b",
     poolStatus: PoolStatus.Ongoing,
     poolType: PoolType.LP,
     rewardTokenPair: tokens.ZZZV2,
     uniPairToken: tokens.ZZZV2,
     uniToken: tokens.ZZZNAPV2,
-    category: PoolCategory.ZZZ,
+    category: PoolCategory.Migration,
     isMigrationPool: true,
   },
   {
@@ -321,8 +385,7 @@ export const pools: Pool[] = [
     poolIcon: "😴",
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake ZZZ for NAP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     hasEffectiveStake: true,
@@ -344,8 +407,7 @@ export const pools: Pool[] = [
     poolIcon: "🔮",
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake ZZZETHLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     hasEffectiveStake: true,
@@ -367,8 +429,7 @@ export const pools: Pool[] = [
     poolIcon: "😻",
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake NAP for CAT.",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
+    purchaseFrom: "https://info.uniswap.org/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
@@ -392,8 +453,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake CATETH LP for CAT.",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x781ce9a6808503261ab27973f3a34dd9f851a6fc",
+    purchaseFrom: "https://info.uniswap.org/pair/0x781ce9a6808503261ab27973f3a34dd9f851a6fc",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Ongoing,
@@ -417,8 +477,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake CAT for NAP.",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x781ce9a6808503261ab27973f3a34dd9f851a6fc",
+    purchaseFrom: "https://info.uniswap.org/pair/0x781ce9a6808503261ab27973f3a34dd9f851a6fc",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
@@ -441,8 +500,7 @@ export const pools: Pool[] = [
     poolIcon: "😵",
     abi: require("./abi/effective_stake_abi.json"),
     info: "Stake ZZZ for NAP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
@@ -485,11 +543,9 @@ export const pools: Pool[] = [
     poolIcon: "😴",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "",
-    purchaseFrom:
-      "https://info.uniswap.org/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
+    purchaseFrom: "https://info.uniswap.org/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
     usesNewAbi: true,
-    statusText:
-      "Exit from the pool, do not buy UNICORN, boost purchases will be refunded.",
+    statusText: "Exit from the pool, do not buy UNICORN, boost purchases will be refunded.",
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
@@ -532,8 +588,7 @@ export const pools: Pool[] = [
     poolIcon: "🔮",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake ZZZETHLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
@@ -554,8 +609,7 @@ export const pools: Pool[] = [
     poolIcon: "💤",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake ZZZNAPLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
     usesNewAbi: true,
     boostLevels: boostLevels.new,
     poolStatus: PoolStatus.Retired,
@@ -575,8 +629,7 @@ export const pools: Pool[] = [
     poolIcon: "🐏",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZ for DREAM.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     poolStatus: PoolStatus.Closed,
     poolType: PoolType.SingleToken,
     category: PoolCategory.ZZZ,
@@ -595,8 +648,7 @@ export const pools: Pool[] = [
     poolIcon: "😴",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZ for NAP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     poolStatus: PoolStatus.Closed,
     poolType: PoolType.SingleToken,
     category: PoolCategory.ZZZ,
@@ -615,8 +667,7 @@ export const pools: Pool[] = [
     poolIcon: "🔮",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake NAP for DREAM.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
+    purchaseFrom: "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
     poolStatus: PoolStatus.Closed,
     poolType: PoolType.SingleToken,
     category: PoolCategory.ZZZ,
@@ -636,8 +687,7 @@ export const pools: Pool[] = [
     poolIcon: "🛌",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZNAPLP for DREAM.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
     poolStatus: PoolStatus.Closed,
     poolType: PoolType.LP,
     category: PoolCategory.ZZZ,
@@ -678,8 +728,7 @@ export const pools: Pool[] = [
     poolIcon: "😪",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZ for ZZZNAPLP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleTokenLPOutput,
     category: PoolCategory.ZZZ,
@@ -699,8 +748,7 @@ export const pools: Pool[] = [
     poolIcon: "💤",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZNAPLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.LP,
     category: PoolCategory.ZZZ,
@@ -776,8 +824,7 @@ export const pools: Pool[] = [
     poolIcon: "😴",
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake ZZZ for NAP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     poolStatus: PoolStatus.Closed,
     poolType: PoolType.SingleToken,
     category: PoolCategory.ZZZ,
@@ -797,8 +844,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake SSLETHLP for SSL.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x287856d10418e01ef1e93df9962b04d9a3a521c9",
+    purchaseFrom: "https://uniswap.info/pair/0x287856d10418e01ef1e93df9962b04d9a3a521c9",
     usesNewAbi: true,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
@@ -820,8 +866,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake NAP for SSL.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
+    purchaseFrom: "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
     usesNewAbi: true,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
@@ -843,8 +888,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake NAP for CORD.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
+    purchaseFrom: "https://uniswap.info/pair/0x0de0322d3ac0d5002e2bc9c3a188728728d90799",
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
     category: PoolCategory.Partners,
@@ -864,8 +908,7 @@ export const pools: Pool[] = [
     poolIconType: PoolIconType.Image,
     abi: require("./abi/multiplier_pool_abi.json"),
     info: "Stake CORD for NAP.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0xf5ae4b8017fdd81d5ee25132d6bbcd75442be90a",
+    purchaseFrom: "https://uniswap.info/pair/0xf5ae4b8017fdd81d5ee25132d6bbcd75442be90a",
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
     category: PoolCategory.Partners,
@@ -885,8 +928,7 @@ export const pools: Pool[] = [
     poolIcon: "😱",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake ZZZ for AHF.",
-    purchaseFrom:
-      "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    purchaseFrom: "https://uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
     usesNewAbi: true,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.SingleToken,
@@ -908,8 +950,7 @@ export const pools: Pool[] = [
     poolIcon: "🤫",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake ZZZETHLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/ETH/0xc75f15ada581219c95485c578e124df3985e4ce0",
     usesNewAbi: true,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.LP,
@@ -930,8 +971,7 @@ export const pools: Pool[] = [
     poolIcon: "💤",
     abi: require("./abi/v3_multiplier_pool_abi.json"),
     info: "Stake ZZZNAPLP for NAP.",
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
     usesNewAbi: true,
     poolStatus: PoolStatus.Retired,
     poolType: PoolType.LP,
@@ -947,48 +987,42 @@ export const localTokens: { [tokenName: string]: Token } = {
     address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   DREAM: {
     name: "DREAM",
     address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   ZZZETH: {
     name: "ZZZETH",
     address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   ZZZNAP: {
     name: "ZZZNAP",
     address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   ZZZV2: {
     name: "ZZZV2",
     address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   NAPV2: {
     name: "NAP",
     address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
 };
 // Kovan test network tokens
@@ -1022,16 +1056,56 @@ export const kovanTokens: { [tokenName: string]: Token } = {
     address: "0x1ED62Ffa07507920f8b670Cca62361ab8a76E531",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
   },
   DREAM: {
     name: "DREAM",
     address: "0xDF0C9883F97A70A6457E159E28e5495a8a3497fd",
     abi: require("./abi/erc20_abi.json"),
     decimals: 18,
-    purchaseFrom:
-      "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+    purchaseFrom: "https://app.uniswap.org/#/add/0x66b3037aa8dd64c3ef1aee13a4d1f2509f672d1c/0xc75f15ada581219c95485c578e124df3985e4ce0",
+  },
+  STAKE: {
+    name: "STAKE",
+    address: "0x279C0dd7833133Dd2657E04a995eE4253984f43b",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
+  },
+  REWARD: {
+    name: "REWARD",
+    address: "0x9A6C5bEBee33B976c2389Bb1d1D449d766BEe0CE",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
+  },
+  MULTI1: {
+    name: "MULTI1",
+    address: "0x01705322FF04De0945C9FEA6C12fB3Ee6b2B16a9",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
+  },
+  MULTI2: {
+    name: "MULTI2",
+    address: "0x1eB9Ae06A8fF3dB420C1C83C45dC78F3AEFc3FF3",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
+  },
+  MULTI3: {
+    name: "MULTI3",
+    address: "0xA8912e61339B2499920B04f91Bc5F25300CCD6Cd",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
+  },
+  MULTI4: {
+    name: "MULTI4",
+    address: "0xb82DcaC441c622C9483e4D4FA54fea25F35679fd",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom: "",
   },
 };
 
@@ -1073,82 +1147,49 @@ export const vaultContracts: { [network: string]: any } = {
 
 export const kovanPools: Pool[] = [
   {
-    id: "1",
-    name: "ZZZV2",
-    address: "0x76200Ef8319022D1C8dd1A2c2999B10480A5F653",
-    token: kovanTokens.ZZZV1,
-    reward: kovanTokens.NAPV2,
-    poolIcon: "⬆️",
-    abi: require("./abi/migration_pool.json"),
-    info: "Migrate ZZZ to V2 and earn NAPV2.",
-    purchaseFrom:
-      "https://beta.uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
-    poolStatus: PoolStatus.Ongoing,
-    poolType: PoolType.SingleToken,
-    rewardTokenPair: kovanTokens.ZZZV1,
-    uniPairToken: kovanTokens.ZZZV1,
-    uniToken: kovanTokens.ZZZV1,
-    category: PoolCategory.ZZZ,
-    isMigrationPool: true,
-  },
-  {
-    id: "2",
-    name: "NAPV2",
-    address: "0x2982483393B9FF6D0134131bD6E1dc8846798bCc",
-    token: kovanTokens.NAPV1,
-    reward: kovanTokens.NAPV2,
-    poolIcon: "⬆️",
-    abi: require("./abi/migration_pool.json"),
-    info: "Migrate NAP to V2 and earn NAP V2.",
-    purchaseFrom:
-      "https://beta.uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
-    poolStatus: PoolStatus.Ongoing,
-    poolType: PoolType.SingleToken,
-    rewardTokenPair: kovanTokens.ZZZV1,
-    uniPairToken: kovanTokens.ZZZV1,
-    uniToken: kovanTokens.ZZZV1,
-    category: PoolCategory.ZZZ,
-    isMigrationPool: true,
-  },
-  {
-    id: "3",
-    name: "ZZZETHV2",
-    address: "0x3Cf5E8ab26230787960cdE766841edc13EFD346e",
-    token: kovanTokens.ZZZV1,
-    reward: kovanTokens.NAPV2,
-    poolIcon: "⬆️",
-    abi: require("./abi/migration_pool.json"),
-    info: "Migrate ZZZETH to V2 and earn NAPV2",
-    purchaseFrom:
-      "https://beta.uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
+    id: "10212",
+    name: "KOVANTEST",
+    address: "0xEce0aC88Ef2B9Ab174cc9c1472AF1f6776554ECE",
+    token: kovanTokens.STAKE,
+    reward: kovanTokens.REWARD,
+    poolIcon: "🐔",
+    abi: require("./abi/poolv3.json"),
+    info: "Test pools.",
+    purchaseFrom: "https://info.uniswap.org/pair/0x4b29ed4190d8387755510feee729fbc974152a0c",
     poolStatus: PoolStatus.Ongoing,
     poolType: PoolType.LP,
-    rewardTokenPair: kovanTokens.ZZZV1,
-    uniPairToken: kovanTokens.ZZZV1,
-    uniToken: kovanTokens.ZZZV1,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: kovanTokens.STAKE,
+    uniPairToken: kovanTokens.STAKE,
+    uniToken: kovanTokens.STAKE,
+    usesNewAbi: true,
     category: PoolCategory.ZZZ,
-    isMigrationPool: true,
-  },
-  {
-    id: "4",
-    name: "ZZZNAPV2",
-    address: "0x3C779170f0f8FEB0fFe657569C7525ebbdE665d5",
-    token: kovanTokens.NAPV1,
-    reward: kovanTokens.NAPV1,
-    poolIcon: "⬆️",
-    abi: require("./abi/migration_pool.json"),
-    info: "Migrate ZZZNAP to V2 and earn NAPV2",
-    purchaseFrom:
-      "https://beta.uniswap.info/pair/0x7d829fcc84f9dca5a3e6d9fb73545bacf350146a",
-    poolStatus: PoolStatus.Ongoing,
-    poolType: PoolType.LP,
-    rewardTokenPair: kovanTokens.ZZZV1,
-    uniPairToken: kovanTokens.ZZZV1,
-    uniToken: kovanTokens.ZZZV1,
-    category: PoolCategory.ZZZ,
-    isMigrationPool: true,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [kovanTokens.MULTI1, kovanTokens.MULTI2, kovanTokens.MULTI3, kovanTokens.MULTI4],
   },
 ];
+
+export const contracts: { [network: string]: any[] } = {
+  kovan: [
+    {
+      name: "Multiplier",
+      address: "0x7e3e679aFAD187C213fD6de71800b577BFBc34b3",
+      abi: require("./abi/pool_multiplier.json"),
+    },
+  ],
+  homestead: [
+    {
+      name: "Multiplier",
+      address: "0xA472FcA97F969F656EC6928578106be7936CBD10",
+      abi: require("./abi/pool_multiplier.json"),
+    },
+  ],
+};
+
+export function getContract(name: string) {
+  return contracts[EthStore.networkName].find((contract: any) => contract.name === name);
+}
 
 export const otherPools = [
   {

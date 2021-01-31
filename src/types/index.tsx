@@ -24,11 +24,23 @@ export type Pool = {
   partnerName?: string;
   hasEffectiveStake?: boolean;
   isMigrationPool?: boolean;
+  v4?: boolean;
+  boostTokens?: Token[];
+  startTime?: number;
 };
 
 export type BoostLevel = {
   level: number;
   percentage: string;
+};
+
+export type BoostInfo = {
+  currentLevel: number;
+  costs: number[];
+  token: Token;
+  hasAllowance: boolean;
+  tokenAmount: number;
+  multiplier: number;
 };
 
 export type UserPoolData = {
@@ -45,6 +57,7 @@ export type UserPoolData = {
   tokenAmount: number;
   boostTokenAmount?: number;
   boostCosts?: number[];
+  boostInfoV4?: BoostInfo[];
 };
 
 export type TimerData = {
@@ -101,6 +114,7 @@ export enum PoolType {
 
 export enum PoolCategory {
   ZZZ = 1,
+  Migration,
   Partners,
   Retired,
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 import { useWeb3React } from "@web3-react/core";
 import Layout from "components/Layout";
@@ -7,8 +7,6 @@ import PriceStore from "stores/prices";
 import Connectors from "components/WalletUnlock/WalletUnlock";
 import PoolsBrowser from "components/PoolPreviewContainer/PoolPreviewContainer";
 import MainPools from "components/MainPools/MainPools";
-import { tokens } from "eth/contracts";
-import { checkNormalAllowance } from "eth/methods";
 import ListedTokens from "./ListedTokens";
 import { useInactiveListener, useEagerConnect } from "hooks/web3";
 import bed from "assets/swimming_pool.svg";
@@ -17,21 +15,8 @@ import { BoxContainer, PoolsContainer, Box, ExtraContainer, MarginForMenu, BuyBu
 import ExtraContent from "./ExtraContent";
 
 function Pools() {
-  const { account, library } = useWeb3React();
+  const { account } = useWeb3React();
   const triedEager = useEagerConnect();
-  const [hasAllowanceZZZV2, setHasAllowanceZZZV2] = useState<any>(null);
-  const [hasAllowanceNAPV2, setHasAllowanceNAPV2] = useState<any>(null);
-
-  useEffect(() => {
-    (async () => {
-      if (account) {
-        const NAP = await checkNormalAllowance(tokens.NAPV2.address, tokens.NAP, account, library);
-        const ZZZ = await checkNormalAllowance(tokens.ZZZV2.address, tokens.ZZZ, account, library);
-        setHasAllowanceNAPV2(NAP);
-        setHasAllowanceZZZV2(ZZZ);
-      }
-    })();
-  }, [hasAllowanceZZZV2, hasAllowanceNAPV2, account, library]);
 
   useInactiveListener(!triedEager);
 

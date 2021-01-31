@@ -6,7 +6,7 @@ import useUpdater from "hooks/useUpdater";
 import Validation from "./Validation";
 import PoolStore from "stores/pools";
 import { Container, PoolData } from "components/MainPool/MainPool.styles";
-import { Pool, PoolStatus } from "types";
+import { BoostInfo, Pool, PoolStatus } from "types";
 import PoolInfoSection from "./PoolInfoSection/PoolInfoSection";
 import ReactToolTip from "react-tooltip";
 import PoolRoiSection from "./PoolRoiSection/PoolRoiSection";
@@ -18,28 +18,28 @@ import getToolTips from "helpers/tooltips";
 
 type Props = {
   pool: Pool;
-  currentBlock: number;
 };
 
-function MainPool({ pool, currentBlock }: Props) {
+function MainPool({ pool }: Props) {
   const [inputValue, setInputValue] = useState(undefined);
+  const [boostSelection, setBoostSelection] = useState(0);
   const { account, library } = useWeb3React();
 
   // Refresh user data when we have a block or an library change.
+  const basePoolData = PoolStore.basePoolData.get(pool.id);
+  const userPoolData = PoolStore.userPoolData.get(pool.id);
   useEffect(() => {
-    if (currentBlock !== 0) {
+    if (!basePoolData) {
       PoolStore.getBasePoolData(pool, library);
-      if (account) {
-        PoolStore.getPoolUserData(account, pool, library);
-      }
     }
-  }, [currentBlock, account, pool, library]);
+    if (account && !userPoolData) {
+      PoolStore.getPoolUserData(account, pool, library);
+    }
+  }, [account, pool, library, basePoolData, userPoolData]);
 
   // This will callback update the pool values after calling contract methods.
   const updater = useUpdater(pool, library, account);
   const signer = useMemo(() => library.getSigner(), [library]);
-  const basePoolData = PoolStore.basePoolData.get(pool.id);
-  const userPoolData = PoolStore.userPoolData.get(pool.id);
   const validationResults = useMemo(() => Validation(pool, userPoolData, basePoolData, inputValue), [
     pool,
     basePoolData,
@@ -69,6 +69,7 @@ function MainPool({ pool, currentBlock }: Props) {
   /**
    * Calculations and conditions
    */
+
   if (validationResults && tooltips) {
     const {
       userPercentageOfTotal,
@@ -95,9 +96,15 @@ function MainPool({ pool, currentBlock }: Props) {
       boostCosts,
       boostLevel,
       boostTokenAmount,
+      boostInfoV4,
     } = userPoolData;
 
     const { staked, migrationStatus } = basePoolData;
+
+    let boostInfo: BoostInfo | undefined = undefined;
+    if (pool.v4 && boostInfoV4) {
+      boostInfo = boostInfoV4[boostSelection];
+    }
 
     return (
       <Container>
@@ -151,13 +158,40 @@ function MainPool({ pool, currentBlock }: Props) {
             updater={updater}
           />
         </PoolData>
-        {pool.id !== "247" && pool.id !== "248" && (
+        {pool.v4 && (
+          <div className="boost-selectors">
+            {pool.boostTokens!.map((token, index) => (
+              <div key={`boost-selector-${token.name}-${pool.name}`} className="boost-selector" onClick={() => setBoostSelection(index)}>
+                boost with {token.name}
+              </div>
+            ))}
+          </div>
+        )}
+        {pool.v4 && boostInfo && (
+          <PoolBoostSection
+            updater={updater}
+            effectiveStake={pool.hasEffectiveStake}
+            account={account}
+            boostTokenAmount={boostInfo.tokenAmount}
+            tooltips={tooltips}
+            poolStatus={pool.poolStatus}
+            boostToken={boostInfo.token}
+            signer={signer}
+            pool={pool}
+            boostCosts={boostInfo.costs}
+            boostLevel={boostInfo.currentLevel}
+            hasBoostAllowance={boostInfo.hasAllowance}
+          />
+        )}
+        {!pool.v4 && pool.boostToken && pool.id !== "247" && pool.id !== "248" && (
           <PoolBoostSection
             effectiveStake={pool.hasEffectiveStake}
             account={account}
             hasBoostAllowance={hasBoostAllowance}
             boostCosts={boostCosts}
             boostLevel={boostLevel}
+            poolStatus={pool.poolStatus}
+            boostToken={pool.boostToken}
             boostTokenAmount={boostTokenAmount}
             tooltips={tooltips}
             signer={signer}

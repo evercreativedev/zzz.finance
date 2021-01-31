@@ -17,7 +17,7 @@ const provider = ethers.getDefaultProvider(defaultNetwork, {
 
 class Eth {
   @observable provider: any = provider;
-  @observable networkName: string = "unknown";
+  @observable networkName: string = "homestead";
   @observable currentBlock: number = 0;
   @observable signer: any = null;
   @observable account: any = null;
@@ -49,10 +49,7 @@ class Eth {
     this.updatePricingData(account, provider);
     this.signer = await provider.getSigner();
     provider.off("block");
-    provider.on(
-      "block",
-      debounce(this.updateBlockNumber, 1000, { leading: false, trailing: true })
-    );
+    provider.on("block", debounce(this.updateBlockNumber, 1000, { leading: false, trailing: true }));
   };
 
   updatePricingData = (account: string, library: any) => {

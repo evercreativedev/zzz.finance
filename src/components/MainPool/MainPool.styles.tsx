@@ -5,11 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background: linear-gradient(
-    to right,
-    rgba(23, 32, 42, 1),
-    rgba(44, 62, 80, 1)
-  );
+  background: linear-gradient(to right, rgba(23, 32, 42, 1), rgba(44, 62, 80, 1));
   margin: 5px;
   border-radius: 10px;
   /* position: relative; */
@@ -19,6 +15,15 @@ export const Container = styled.div`
   -moz-box-shadow: 3px 6px 31px -1px rgba(0, 0, 0, 0.75);
   box-shadow: 3px 6px 31px -1px rgba(0, 0, 0, 0.55);
 
+  .boost-selectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
   .col {
     display: flex;
     align-items: center;

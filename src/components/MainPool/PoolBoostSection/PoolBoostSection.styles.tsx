@@ -54,7 +54,7 @@ export const Footer = styled.div`
     color: white;
     font-weight: bold;
     width: 100%;
-    height: 35px;
+    height: 15px;
     display: flex;
     font-size: 12px;
     flex-direction: column;

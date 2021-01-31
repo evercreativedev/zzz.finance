@@ -5,9 +5,9 @@ import { observer } from "mobx-react";
 import Button from "components/Button/Button";
 import { Pool, PoolCategory, PoolStatus } from "types";
 import MainPool from "components/MainPool/MainPool";
-import EthStore from "stores/eth";
 const poolCategories = [
   { category: PoolCategory.ZZZ, name: "ZZZ" },
+  { category: PoolCategory.Migration, name: "Migration" },
   { category: PoolCategory.Partners, name: "Partners" },
   { category: PoolCategory.Retired, name: "Retired" },
 ];
@@ -15,13 +15,10 @@ const poolCategories = [
 function MainPools() {
   const [selectedCategory, setSelectedCategory] = useState(PoolCategory.ZZZ);
   const selectedPools = pools.filter(filterDeadPools(selectedCategory));
-  const { currentBlock } = EthStore;
   return (
     <Container>
       {selectedCategory === PoolCategory.Retired && (
-        <div className="pool-status-info">
-          These pools are closed / closing. Please exit or withdraw all.
-        </div>
+        <div className="pool-status-info">These pools are closed / closing. Please exit or withdraw all.</div>
       )}
       <CategoryContainer>
         {poolCategories.map(({ category, name }) => (
@@ -36,23 +33,21 @@ function MainPools() {
         ))}
       </CategoryContainer>
       {selectedPools.map((pool) => (
-        <MainPool
-          key={`main-pool-${pool.id}`}
-          pool={pool}
-          currentBlock={currentBlock}
-        />
+        <MainPool key={`main-pool-${pool.id}`} pool={pool} />
       ))}
     </Container>
   );
 }
 
-const isAlive = (poolStatus: PoolStatus) =>
-  poolStatus === PoolStatus.Ongoing || poolStatus === PoolStatus.Incoming;
+const isAlive = (poolStatus: PoolStatus) => poolStatus === PoolStatus.Ongoing || poolStatus === PoolStatus.Incoming;
 
 const filterDeadPools = (selectedCategory: PoolCategory) => (pool: Pool) => {
   const alive = isAlive(pool.poolStatus);
   if (selectedCategory === PoolCategory.ZZZ) {
     return pool.category === PoolCategory.ZZZ && alive;
+  }
+  if (selectedCategory === PoolCategory.Migration) {
+    return pool.category === PoolCategory.Migration && alive;
   }
   if (selectedCategory === PoolCategory.Retired) {
     return !alive;
