@@ -270,7 +270,7 @@ export const pools: Pool[] = [
     reward: tokens.ZZZV2,
     poolIcon: "😴",
     abi: require("./abi/poolv3.json"),
-    info: "Stake ZZZ/ETH LP for ZZZ",
+    info: "Stake ZZZ/RFI LP for ZZZ",
     purchaseFrom:
       "https://info.uniswap.org/pair/0x5fdc37cf54153533ebe5b2e542f6b9fbf904a83d",
     poolStatus: PoolStatus.Ongoing,
