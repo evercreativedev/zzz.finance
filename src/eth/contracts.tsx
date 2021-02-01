@@ -236,10 +236,80 @@ export const tokens: { [tokenName: string]: Token } = {
     purchaseFrom:
       "https://info.uniswap.org/pair/0x0f3ce875cd56870ec7915e0fa247a202685888c5",
   },
+  ELERFI: {
+    name: "ELE/RFI",
+    address: "0x566bd15534edc77c918a208a8def774e19616412",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom:
+      "https://info.uniswap.org/pair/0x566bd15534edc77c918a208a8def774e19616412",
+  },
+  ZZZRFI: {
+    name: "ZZZ/RFI",
+    address: "0x5fdc37cf54153533ebe5b2e542f6b9fbf904a83d",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 18,
+    purchaseFrom:
+      "https://info.uniswap.org/pair/0x5fdc37cf54153533ebe5b2e542f6b9fbf904a83d",
+  },
+  ELE: {
+    name: "ELE",
+    address: "0x48be867b240d2ffaff69e0746130f2c027d8d3d2",
+    abi: require("./abi/erc20_abi.json"),
+    decimals: 9,
+  },
 };
 
 // Mainnet pools
 export const pools: Pool[] = [
+  {
+    id: "10291",
+    name: "ZZZ/RFI",
+    address: "0x39Ab9213201535274d3B3cf1E586c1E0a1a67b65",
+    token: tokens.ZZZRFI,
+    reward: tokens.ZZZV2,
+    poolIcon: "😴",
+    abi: require("./abi/poolv3.json"),
+    info: "Stake ZZZ/ETH LP for ZZZ",
+    purchaseFrom:
+      "https://info.uniswap.org/pair/0x5fdc37cf54153533ebe5b2e542f6b9fbf904a83d",
+    poolStatus: PoolStatus.Ongoing,
+    poolType: PoolType.LP,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: tokens.ZZZETHV2,
+    uniPairToken: tokens.RFI,
+    uniToken: tokens.ZZZRFI,
+    usesNewAbi: true,
+    category: PoolCategory.ZZZ,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [tokens.DREAM, tokens.NAPV2, tokens.DAI, tokens.RFI],
+    startTime: 1612299000,
+  },
+  {
+    id: "10249",
+    name: "ELE/RFI",
+    address: "0x65A7644cC264aC32283F5F885347Cd5007B9BD96",
+    token: tokens.ELERFI,
+    reward: tokens.ZZZV2,
+    poolIcon: "⏫",
+    abi: require("./abi/poolv3.json"),
+    info: "Stake ELE/RFI LP for ZZZ",
+    purchaseFrom:
+      "https://info.uniswap.org/pair/0x566bd15534edc77c918a208a8def774e19616412",
+    poolStatus: PoolStatus.Ongoing,
+    poolType: PoolType.LP,
+    boostLevels: boostLevels.v4,
+    rewardTokenPair: tokens.ZZZETHV2,
+    uniPairToken: tokens.RFI,
+    uniToken: tokens.ELERFI,
+    usesNewAbi: true,
+    category: PoolCategory.ZZZ,
+    isMigrationPool: false,
+    v4: true,
+    boostTokens: [tokens.DREAM, tokens.NAPV2, tokens.DAI, tokens.RFI],
+    startTime: 1612299000,
+  },
   {
     id: "10212",
     name: "ZZZ/ETH",

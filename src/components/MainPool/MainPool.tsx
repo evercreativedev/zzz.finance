@@ -40,19 +40,21 @@ function MainPool({ pool }: Props) {
   // This will callback update the pool values after calling contract methods.
   const updater = useUpdater(pool, library, account);
   const signer = useMemo(() => library.getSigner(), [library]);
-  const validationResults = useMemo(() => Validation(pool, userPoolData, basePoolData, inputValue), [
-    pool,
-    basePoolData,
-    userPoolData,
-    inputValue,
-  ]);
+  const validationResults = useMemo(
+    () => Validation(pool, userPoolData, basePoolData, inputValue),
+    [pool, basePoolData, userPoolData, inputValue]
+  );
 
-  const tooltips = useMemo(() => getToolTips(userPoolData, basePoolData, validationResults?.poolClosed, inputValue), [
-    userPoolData,
-    basePoolData,
-    validationResults,
-    inputValue,
-  ]);
+  const tooltips = useMemo(
+    () =>
+      getToolTips(
+        userPoolData,
+        basePoolData,
+        validationResults?.poolClosed,
+        inputValue
+      ),
+    [userPoolData, basePoolData, validationResults, inputValue]
+  );
   // Get the pool data
   if (!account) return null;
 
@@ -61,10 +63,13 @@ function MainPool({ pool }: Props) {
   // Just display spinner if we do not have any data
   if (!basePoolData || !userPoolData) {
     // Fetch retired pools data here. We don't want to spam all of them on the app launch.
-    if (pool.poolStatus === PoolStatus.Retired || pool.poolStatus === PoolStatus.Closed) {
+    if (
+      pool.poolStatus === PoolStatus.Retired ||
+      pool.poolStatus === PoolStatus.Closed
+    ) {
       PoolStore.getBasePoolData(pool, library);
     }
-    return <Spinner type="ThreeDots" />;
+    return <Spinner type="Puff" width={75} height={75} color="#26063b" />;
   }
   /**
    * Calculations and conditions
@@ -130,7 +135,12 @@ function MainPool({ pool }: Props) {
         )}
         <PoolData>
           <PoolInfoSection pool={pool} userTokenAmount={tokenAmount} />
-          <PoolRoiSection weeklyROI={weeklyROI} weeklyUSD={weeklyUSD} yearlyROI={yearlyROI} displayYields={displayYields} />
+          <PoolRoiSection
+            weeklyROI={weeklyROI}
+            weeklyUSD={weeklyUSD}
+            yearlyROI={yearlyROI}
+            displayYields={displayYields}
+          />
           <PoolInputSection
             canMaxWithdraw={canMaxWithdraw}
             canStake={canStake}
@@ -161,7 +171,11 @@ function MainPool({ pool }: Props) {
         {pool.v4 && (
           <div className="boost-selectors">
             {pool.boostTokens!.map((token, index) => (
-              <div key={`boost-selector-${token.name}-${pool.name}`} className="boost-selector" onClick={() => setBoostSelection(index)}>
+              <div
+                key={`boost-selector-${token.name}-${pool.name}`}
+                className="boost-selector"
+                onClick={() => setBoostSelection(index)}
+              >
                 boost with {token.name}
               </div>
             ))}
@@ -183,22 +197,25 @@ function MainPool({ pool }: Props) {
             hasBoostAllowance={boostInfo.hasAllowance}
           />
         )}
-        {!pool.v4 && pool.boostToken && pool.id !== "247" && pool.id !== "248" && (
-          <PoolBoostSection
-            effectiveStake={pool.hasEffectiveStake}
-            account={account}
-            hasBoostAllowance={hasBoostAllowance}
-            boostCosts={boostCosts}
-            boostLevel={boostLevel}
-            poolStatus={pool.poolStatus}
-            boostToken={pool.boostToken}
-            boostTokenAmount={boostTokenAmount}
-            tooltips={tooltips}
-            signer={signer}
-            pool={pool}
-            updater={updater}
-          />
-        )}
+        {!pool.v4 &&
+          pool.boostToken &&
+          pool.id !== "247" &&
+          pool.id !== "248" && (
+            <PoolBoostSection
+              effectiveStake={pool.hasEffectiveStake}
+              account={account}
+              hasBoostAllowance={hasBoostAllowance}
+              boostCosts={boostCosts}
+              boostLevel={boostLevel}
+              poolStatus={pool.poolStatus}
+              boostToken={pool.boostToken}
+              boostTokenAmount={boostTokenAmount}
+              tooltips={tooltips}
+              signer={signer}
+              pool={pool}
+              updater={updater}
+            />
+          )}
         <ReactToolTip />
       </Container>
     );

@@ -66,7 +66,6 @@ class VaultStore {
     const stakingTokenName = await stakingToken.name();
 
     let totalStaked = 0;
-    console.log(stakingTokenName);
     if (stakingTokenName === "ZZZ V2") {
       totalStaked = formatResult(await this.vault.userZZZ());
     } else if (stakingTokenName === "NAP V2") {
@@ -82,8 +81,6 @@ class VaultStore {
 
     const ZZZShare = Number(vaultInfo.allocPointZZZ) / 295;
     const NAPShare = Number(vaultInfo.allocPointNAP) / 300;
-
-    console.log("shares", ZZZShare, NAPShare, vaultId);
 
     const ZZZaveragePerBlock =
       formatResult(rewardsPerBlock.ZZZaveragePerBlock) * ZZZShare;
@@ -197,6 +194,8 @@ class VaultStore {
         (vaultData.totalStaked * STAKEPRICE);
       let ZZZYield = ZZZ * 100;
       let NAPYield = NAP * 100;
+
+      console.log(ZZZYield, NAPYield, ZZZPRICE, NAPPRICE);
       return ZZZYield + NAPYield;
     } else {
       return 0;
