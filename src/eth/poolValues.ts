@@ -132,7 +132,6 @@ async function getBoostInfo(
     })
   );
 
-  console.log(result);
   return result;
 }
 

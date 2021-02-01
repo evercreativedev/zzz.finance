@@ -1,4 +1,11 @@
-import { observable, action, configure, runInAction, computed, autorun } from "mobx";
+import {
+  observable,
+  action,
+  configure,
+  runInAction,
+  computed,
+  autorun,
+} from "mobx";
 import { BasePoolData, Pool, PoolStatus, UserPoolData } from "types";
 import { getPoolUserData, getPoolValues } from "eth/poolValues";
 import PriceStore from "stores/prices";
@@ -33,17 +40,27 @@ class Pools {
 
   syncToStorage = () => {
     localStorage.setItem("zzz-pool-data-last-sync", JSON.stringify(Date.now()));
-    localStorage.setItem("zzz-user-pool-data", JSON.stringify(this.userPoolData));
-    localStorage.setItem("zzz-base-pool-data", JSON.stringify(this.basePoolData));
+    localStorage.setItem(
+      "zzz-user-pool-data",
+      JSON.stringify(this.userPoolData)
+    );
+    localStorage.setItem(
+      "zzz-base-pool-data",
+      JSON.stringify(this.basePoolData)
+    );
   };
   // Gets base data that does not require account for ongoing pools.
   @action getOngoingPoolData = async (provider: any) => {
-    pools.filter((pool) => pool.poolStatus === PoolStatus.Ongoing).forEach((pool) => this.getBasePoolData(pool, provider));
+    pools
+      .filter((pool) => pool.poolStatus === PoolStatus.Ongoing)
+      .forEach((pool) => this.getBasePoolData(pool, provider));
   };
 
   // Gets base data that does require user account
   @action getAllUserPoolData = async (account: string, provider: any) => {
-    pools.forEach((pool) => runInAction(() => this.getPoolUserData(account, pool, provider)));
+    pools.forEach((pool) =>
+      runInAction(() => this.getPoolUserData(account, pool, provider))
+    );
   };
 
   // Fetches single pools base data.
@@ -56,7 +73,11 @@ class Pools {
   };
 
   // Gets the user data from a pool, how much staked, rewards etc.
-  @action getPoolUserData = async (account: string, pool: Pool, provider: any) => {
+  @action getPoolUserData = async (
+    account: string,
+    pool: Pool,
+    provider: any
+  ) => {
     const data = await getPoolUserData(account, pool, provider);
 
     runInAction(() => this.userPoolData.set(pool.id, data));
@@ -103,8 +124,15 @@ class Pools {
       if (pool && pool.TVL && isFinite(pool.TVL)) {
         tvl.usd = tvl.usd + pool.TVL;
       }
-      if (pool.stakingToken.name === "ZZZNAPLP" || pool.stakingToken.name === "ZZZETHLP") {
-        if (pool.underlyingTokens && pool.underlyingTokens.token1 && pool.underlyingTokens.token2) {
+      if (
+        pool.stakingToken.name === "ZZZNAPLPV2" ||
+        pool.stakingToken.name === "ZZZETHLPV2"
+      ) {
+        if (
+          pool.underlyingTokens &&
+          pool.underlyingTokens.token1 &&
+          pool.underlyingTokens.token2
+        ) {
           tvl.zzz = tvl.zzz + pool.underlyingTokens.token1;
           tvl.nap = tvl.nap + pool.underlyingTokens.token2;
         }

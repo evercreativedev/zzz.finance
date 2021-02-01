@@ -58,8 +58,6 @@ async function getYieldLP(pool: Pool, provider: any): Promise<Yields | null> {
     STAKING_TOKEN_PRICE
   ).toFixed(2);
 
-  console.log(weeklyReward, pool.token.address, REWARD_TOKEN_PRICE);
-
   return {
     rewardPerToken,
     dailyROI: (parseFloat(weeklyROI) / 7).toFixed(2),

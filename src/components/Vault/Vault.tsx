@@ -65,7 +65,7 @@ function Vault({ vaultId }: Props) {
   const { costs } = vaultBoostData;
   const currentBoostToken = boostTokens[currentBoost];
 
-  const hasTimelock = timelockEnd > 0;
+  const hasTimelock = timelockEnd > Date.now() / 1000;
 
   return (
     <div className="vault">

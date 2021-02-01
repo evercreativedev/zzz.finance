@@ -180,11 +180,6 @@ class VaultStore {
     if (vaultId === 3) STAKEPRICE = PriceStore.prices.get("NAPV2");
 
     const blockPerYear = 2407905;
-    console.log(
-      vaultData.totalStaked * STAKEPRICE,
-      STAKEPRICE,
-      vaultId.toString()
-    );
     if (ZZZPRICE && NAPPRICE && STAKEPRICE && vaultData) {
       let ZZZ =
         (vaultData.ZZZPerBlock * blockPerYear * ZZZPRICE) /
@@ -195,7 +190,6 @@ class VaultStore {
       let ZZZYield = ZZZ * 100;
       let NAPYield = NAP * 100;
 
-      console.log(ZZZYield, NAPYield, ZZZPRICE, NAPPRICE);
       return ZZZYield + NAPYield;
     } else {
       return 0;
