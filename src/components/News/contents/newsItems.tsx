@@ -208,6 +208,12 @@ const newsItems: TNews[] = [
     ),
     link: "/#/pools",
   },
+  {
+    id: 17,
+    text: () => <span className="main-text">Wuff wuff</span>,
+    extra: () => <span className="extra-text">Who let the dogs out?</span>,
+    link: "/#/pools",
+  },
 ];
 
 export default newsItems;

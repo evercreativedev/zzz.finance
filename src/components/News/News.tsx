@@ -3,7 +3,7 @@ import newsItems from "./contents/newsItems";
 import { NewsContainer, NewsContentLink } from "./News.styles";
 
 function News() {
-  const [newsIndex, setNewsIndex] = useState(16);
+  const [newsIndex, setNewsIndex] = useState(17);
   const newsItem = newsItems[newsIndex];
   if (!newsItem) {
     setNewsIndex(0);
